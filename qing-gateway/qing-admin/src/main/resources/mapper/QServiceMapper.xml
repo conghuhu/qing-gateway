@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qing.admin.mapper.QServiceMapper">
+
+    <insert id="insertByReplace" parameterType="object">
+        insert
+        ignore
+        into q_service (`service_name`,`description`,`enabled`,`created_time`)
+        values (
+        #{service.serviceName},
+        #{service.description},
+        #{service.enabled},
+        #{service.createdTime}
+        )
+    </insert>
+</mapper>

@@ -1,0 +1,1 @@
+import{R as e,b0 as t}from"./index.js";const a=({name:a})=>e.createElement("div",null,e.createElement("h2",null,"404"),e.createElement("div",null,e.createElement(t,{to:"/"},"Home")),e.createElement("div",null,e.createElement(t,{to:"/dashboard"},"Dashboard")));export{a as default};

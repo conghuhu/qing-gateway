@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "web.client.max-idle-time",
+      "type": "java.lang.String",
+      "description": "Description for web.client.max-idle-time."
+  }
+] }

@@ -1,0 +1,56 @@
+.cointainer {
+  background-color: rgb(255, 255, 255);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.cointainer::after {
+  content: "";
+  position: absolute;
+  width: 90vw;
+  height: 150vh;
+  border-radius: 50%;
+  background-color: rgb(41,140,236);
+  left: -40vw;
+  top: -70vh;
+  z-index: 1;
+}
+.title {
+  position: absolute;
+  width: 25vw;
+  height: 3vh;
+  z-index: 99;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2vw;
+  color: white;
+  left: 10vw;
+  top: 5vh;
+}
+.left {
+  position: absolute;
+  left: 10vw;
+  height: 50vh;
+  width: 30vw;
+  bottom: 10vh;
+  z-index: 99;
+}
+.Login {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40vw;
+  height: 80vh;
+  /* border: 5px solid rgb(14, 14, 14,0.5); */
+  right: 8vw;
+  top: 10vh;
+  z-index: 100;
+}
+.Login > span {
+  margin-top: -8vh;
+  margin-bottom: 8vh;
+  font-size: 3vw;
+  font-weight: 700;
+  color: rgb(70,70,70);
+}

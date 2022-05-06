@@ -1,0 +1,75 @@
+### 测试转发
+GET https://localhost:8101/today/traffic/getTraffic
+
+### 限流，每分钟2次
+POST https://localhost:8101/today/traffic/getTraffic
+
+###
+GET https://localhost:8101/medical/medical/getMedical
+
+
+### 测试不存在的转发
+POST https://localhost:8101/to/traffic/getTraffic
+
+### 在线地址
+GET http://124.222.224.173:8901/traffic/getTraffic
+
+### 测试转发
+POST http://124.222.224.173:8101/test/traffic/getTraffic
+
+###
+POST http://124.222.224.173:8101/today/traffic/getTraffic
+
+###
+GET http://124.222.224.173:8101/medical/medical/getMedical
+
+### 线上限流，每分钟2次
+POST http://124.222.224.173:8101/today/traffic/getTraffic
+
+
+### 测试系统运行信息
+GET https://localhost:8101/health/getCpuInfo
+
+### 测试系统内存信息
+GET https://localhost:8101/health/memInfo
+
+### 测试系统信息
+GET https://localhost:8101/health/getSysInfo
+
+### jvm信息
+GET https://localhost:8101/health/getJvmInfo
+
+### 线程信息
+GET https://localhost:8101/health/getThreadInfo
+
+
+### 测试定位
+GET https://api.map.baidu.com/location/ip?ak=bYm9BydW7zrgrdhKD4uMTZLHX2IaujHx&ip=58.194.168.208&coor=bd09ll
+
+
+
+
+
+### 网关集群测试接口1
+GET http://localhost:8080/example1/traffic/getTraffic
+
+### 网关集群测试接口2
+GET http://localhost:8080/example2/medical/getMedical
+
+
+### 网关集群测试接口1
+GET http://101.42.243.67:8900/traffic/getTraffic
+
+### 网关集群测试接口1
+POST http://localhost:8080/example1/traffic/setTraffic
+
+
+###
+GET http://101.42.243.67:8101/example1/traffic/getTraffic
+
+
+###
+GET http://127.0.0.1:8101/example1/traffic/getTraffic
+
+###
+GET http://127.0.0.1:8101/example2/medical/getMedical

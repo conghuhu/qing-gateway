@@ -1,0 +1,21 @@
+### 网关集群测试接口1Get——对应转发至traffic服务（限流 每分钟2次）
+GET http://localhost:8080/example1/traffic/getTraffic
+
+### 网关集群测试接口1Post——对应转发至traffic服务
+POST http://localhost:8080/example1/traffic/setTraffic
+
+### 网关集群测试接口1Post——对应转发至traffic服务 带body
+POST http://localhost:8080/example1/traffic/getTrafficByPage
+Content-Type: application/json
+
+{
+  "pageNum": 1,
+  "pageSize": 10,
+  "content": "分页效果不错"
+}
+
+### 网关集群测试接口2——对应转发至medical服务 Get
+GET http://localhost:8080/example2/medical/getMedical
+
+### 网关集群测试接口2——对应转发至medical服务 Post
+POST http://localhost:8080/example2/medical/setMedical

@@ -1,0 +1,12 @@
+{
+  "vite": true,
+  "dropLogLevel": "log",
+  "plugins": [
+    [
+      "build-plugin-ignore-style",
+      {
+        "libraryName": "antd"
+      }
+    ]
+  ]
+}

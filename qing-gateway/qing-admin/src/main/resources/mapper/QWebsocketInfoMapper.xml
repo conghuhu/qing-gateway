@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qing.admin.mapper.QWebsocketInfoMapper">
+
+    <insert id="insertByReplace" parameterType="object">
+        insert
+        ignore
+        into `q_websocket_info` (`uri`,`bean_name`,`enabled`,`created_time`,`ip`)
+        values (
+        #{websocketInfo.uri},
+        #{websocketInfo.beanName},
+        #{websocketInfo.enabled},
+        #{websocketInfo.createdTime},
+        #{websocketInfo.ip}
+        )
+    </insert>
+</mapper>

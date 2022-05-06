@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: application/javascript,application/json,application/xml,text/html,text/xml,text/plain,text/javascript
+    min-response-size: 1024
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://150.158.97.5:3306/qing_gateway?useUnicode=true&characterEncoding=UTF-8&serverTimeZone=UTC&rewriteBatchedStatements=true
+    username: root
+    password: cong0917
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      connection-timeout: 60000
+      idle-timeout: 60000
+  redis:
+    host: 101.201.143.127
+    port: 6379
+    password:
+    timeout: 5000
+    connect-timeout: 5000
+
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+# http://101.201.143.127:8080/swagger-ui/index.html#/

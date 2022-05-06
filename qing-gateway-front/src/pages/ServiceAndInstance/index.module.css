@@ -1,0 +1,11 @@
+.headContainer {
+  margin-bottom: 1.5rem;
+}
+
+.button {}
+
+.editable-row .ant-form-item-explain {
+  position: absolute;
+  top: 100%;
+  font-size: 12px;
+}

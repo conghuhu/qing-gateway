@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qing.admin.mapper.QServiceInstanceMapper">
+
+    <insert id="insertByReplace" parameterType="object">
+        replace
+        into q_service_instance
+        (`service_id`,`version`,`ip`,`port`,`weight`,`clusterName`,`protocol`,`created_time`)
+        values
+        (
+        #{serviceInstance.serviceId},
+        #{serviceInstance.version},
+        #{serviceInstance.ip},
+        #{serviceInstance.port},
+        #{serviceInstance.weight},
+        #{serviceInstance.clustername},
+        #{serviceInstance.protocol},
+        #{serviceInstance.createdTime}
+        )
+    </insert>
+</mapper>

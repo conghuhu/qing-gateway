@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: qing-admin
+  profiles:
+    active: dev

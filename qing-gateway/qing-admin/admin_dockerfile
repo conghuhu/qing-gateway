@@ -1,0 +1,4 @@
+FROM openjdk:8-jre-alpine
+MAINTAINER conghuhu <conghuhu_blog>
+ADD ./qing_admin.jar /qing_admin.jar
+CMD java -jar /qing_admin.jar --spring.profiles.active=prod

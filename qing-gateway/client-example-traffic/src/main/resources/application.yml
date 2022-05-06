@@ -1,0 +1,14 @@
+server:
+  port: 8900
+spring:
+  application:
+    name: traffic
+  cloud:
+    nacos:
+      server-addr: 124.222.60.243:8848
+      discovery:
+        ip: 124.222.224.173
+        group: QING_GROUP
+        metadata:
+          version: 2.0
+          protocol: http
