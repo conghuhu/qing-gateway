@@ -12,7 +12,7 @@
 
 - 支持跨域
 
-  ![整体架构](D:\MainProject\Qing_Gateway\asset\整体架构.jpg)
+  ![整体架构](./asset/整体架构.jpg)
 
 
 ## 一、项目结构
@@ -46,7 +46,7 @@
 7. 浏览器打开localhost:8080/static/index.html，看到下图登录界面，则说明成功。默认账号密码是admin,123456。
 ```
 
-![网关管理平台首页](D:\MainProject\Qing_Gateway\asset\网关管理平台首页.png)
+![网关管理平台首页](./asset/网关管理平台首页.png)
 
 ## 三、docker部署
 
@@ -84,7 +84,7 @@
 | 124.222.224.173:8080 |      |      |
 | 101.42.243.67:8080   |      |      |
 
-查看网络连接情况：netstat -n | awk '/^tcp/ {++state[$NF]} END {for(key in state) print key,"\t",state[key]}'
+查看网络连接情况：```netstat -n | awk '/^tcp/ {++state[$NF]} END {for(key in state) print key,"\t",state[key]}'```
 
 
 
@@ -92,10 +92,10 @@
 
 如下图所示，在4核16G的环境对网关单机测试，设置线程数为1000，2秒内发送，循环200次，也就是10w的QPS，错误率为0.13%，因此得出结论，网关单节点能承受10w的并发量。
 
-![单机性能](D:\MainProject\Qing_Gateway\asset\单机性能.png)
+![单机性能](./asset/单机性能.png)
 
 ### 集群压测结果
 
 分别在一台4核、16G的，三台2核4G的服务器搭建四个网关节点，使用Nginx按照4，1，1，1权重做负载均衡。如下图所示，设置线程数为1000，2秒内发送，循环400次，也就是20w的QPS，错误率为0.01%。因此得出结论，集群模式下，可承受至少40w的QPS。
 
-![集群性能](D:\MainProject\Qing_Gateway\asset\集群性能.png)
+![集群性能](./asset/集群性能.png)
