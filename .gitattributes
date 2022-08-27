@@ -1,4 +1,2 @@
 *.java linguist-language=Java
-*.yml linguist-language=Java
-*.xml linguist-language=Java
-*.sql linguist-language=Java
+*.ts linguist-language=Java
