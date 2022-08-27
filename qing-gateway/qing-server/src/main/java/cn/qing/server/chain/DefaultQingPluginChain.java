@@ -31,22 +31,22 @@ public class DefaultQingPluginChain implements QingPluginChain {
     private final String serviceName;
 
     /**
-     * 当前过滤连所在服务对应的路由名称
+     * 当前过滤连所在服务对应的path
      */
-    private final String routeName;
+    private final String path;
 
     /**
      * 插件链的构造方法
      *
      * @param plugins
      * @param serviceName
-     * @param routeName
+     * @param path
      */
-    public DefaultQingPluginChain(final List<QingPlugin> plugins, String serviceName, String routeName) {
+    public DefaultQingPluginChain(final List<QingPlugin> plugins, String serviceName, String path) {
         log.info("插件链初始化");
         this.plugins = plugins;
         this.serviceName = serviceName;
-        this.routeName = routeName;
+        this.path = path;
     }
 
     /**
@@ -61,7 +61,7 @@ public class DefaultQingPluginChain implements QingPluginChain {
 
     @Override
     public String routeName() {
-        return this.routeName;
+        return this.path;
     }
 
     /**

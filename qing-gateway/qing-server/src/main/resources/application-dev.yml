@@ -24,7 +24,7 @@ qing:
     websocket-port: 9999
   routes:
     - uri: traffic
-      predicates: test
+      predicates: /test
       priority: 100
 
 web:

@@ -7,19 +7,16 @@ import cn.qing.server.cache.RouteRuleCache;
 import cn.qing.server.cache.ServiceCache;
 import cn.qing.server.chain.DefaultQingPluginChain;
 import cn.qing.server.plugin.base.QingPlugin;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.lang.NonNull;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebHandler;
 import reactor.core.publisher.Mono;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author conghuhu
@@ -52,14 +49,13 @@ public final class QingWebHandler implements WebHandler {
     @Override
     public Mono<Void> handle(@NonNull final ServerWebExchange exchange) {
         log.info("QingWebHandler handle");
-        String routeName = parseServiceName(exchange);
-        log.info("解析出来的routeName为：{}", routeName);
-        ServiceRuleDTO serviceRule = RouteRuleCache.getServiceRule(routeName);
+        String path = parseServiceName(exchange);
+        ServiceRuleDTO serviceRule = RouteRuleCache.getServiceRule(path);
         String serviceName = serviceRule.getServiceName();
         if (CollectionUtils.isEmpty(ServiceCache.getAllInstances(serviceName))) {
             throw new QingException(QingExceptionEnum.SERVICE_NOT_FIND);
         }
-        return new DefaultQingPluginChain(plugins, serviceName, routeName).doChain(exchange);
+        return new DefaultQingPluginChain(plugins, serviceName, path).doChain(exchange);
     }
 
     /**
@@ -77,12 +73,13 @@ public final class QingWebHandler implements WebHandler {
      */
     private String parseServiceName(ServerWebExchange exchange) {
         ServerHttpRequest request = exchange.getRequest();
-        String routeName;
+        String path;
         try {
-            routeName = request.getPath().value().split("/")[1];
+            log.info("原始path为：{}", request.getURI().getPath());
+            path = request.getURI().getPath();
         } catch (Exception e) {
             throw new QingException(QingExceptionEnum.PARAM_ERROR);
         }
-        return routeName;
+        return path;
     }
 }

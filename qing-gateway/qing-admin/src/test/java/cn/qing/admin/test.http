@@ -73,3 +73,7 @@ GET http://127.0.0.1:8101/example1/traffic/getTraffic
 
 ###
 GET http://127.0.0.1:8101/example2/medical/getMedical
+
+
+###
+GET https://localhost:8101/medical-api/medical/getMedical

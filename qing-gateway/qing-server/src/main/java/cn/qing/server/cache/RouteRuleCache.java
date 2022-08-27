@@ -2,11 +2,11 @@ package cn.qing.server.cache;
 
 import cn.qing.common.exception.QingException;
 import cn.qing.common.pojo.dto.ServiceRuleDTO;
+import cn.qing.server.utils.RouteTrie;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 路由规则缓存
@@ -16,24 +16,27 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 public class RouteRuleCache {
+
     /**
-     * 路由规则缓存
-     * key: routeName
-     * value: ServiceRuleDTO
+     * 路由规则缓存-前缀树
      */
-    private static final Map<String, ServiceRuleDTO> ROUTE_RULE_MAP = new ConcurrentHashMap<>();
+    private static final RouteTrie ROUTE_RULE_ROUTE_TRIE = new RouteTrie();
 
     /**
      * 添加路由规则
      *
-     * @param map
+     * @param map key: path value: ServiceRuleDTO
      */
     public static void addRule(Map<String, ServiceRuleDTO> map) {
-        ROUTE_RULE_MAP.putAll(map);
+        for (Map.Entry<String, ServiceRuleDTO> entry : map.entrySet()) {
+            String routeName = entry.getKey();
+            ServiceRuleDTO serviceRuleDTO = entry.getValue();
+            ROUTE_RULE_ROUTE_TRIE.insertRoute(routeName, serviceRuleDTO);
+        }
     }
 
     public static void updateRule(Map<String, ServiceRuleDTO> map) {
-        ROUTE_RULE_MAP.putAll(map);
+        addRule(map);
     }
 
     /**
@@ -42,17 +45,17 @@ public class RouteRuleCache {
      * @param routeName
      */
     public static void removeRule(String routeName) {
-        ROUTE_RULE_MAP.remove(routeName);
+        ROUTE_RULE_ROUTE_TRIE.removeRouteRule(routeName);
     }
 
     /**
      * 获取某条路由规则
      *
-     * @param routeName
+     * @param path
      * @return
      */
-    public static ServiceRuleDTO getServiceRule(String routeName) {
-        return Optional.ofNullable(ROUTE_RULE_MAP.get(routeName))
-                .orElseThrow(() -> new QingException("routeName: " + routeName + " not found"));
+    public static ServiceRuleDTO getServiceRule(String path) {
+        return Optional.ofNullable(ROUTE_RULE_ROUTE_TRIE.getServiceRule(path))
+            .orElseThrow(() -> new QingException("routeName: " + path + " not found"));
     }
 }

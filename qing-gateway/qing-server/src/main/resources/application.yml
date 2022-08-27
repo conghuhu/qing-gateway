@@ -2,4 +2,4 @@ spring:
   application:
     name: qing-gateway
   profiles:
-    active: prod
+    active: dev

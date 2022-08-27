@@ -44,7 +44,7 @@ public class WebClientUtils {
     public Mono<Void> execute(ServerWebExchange exchange, String url) {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
-        HttpMethod method = request.getMethod();
+        final HttpMethod method = request.getMethod();
 
         assert method != null;
         RequestBodySpec requestBodySpec = this.webClient

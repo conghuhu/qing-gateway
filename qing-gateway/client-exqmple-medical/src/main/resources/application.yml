@@ -1,5 +1,7 @@
 server:
   port: 8500
+  servlet:
+    context-path: /medical-api
 spring:
   application:
     name: medical
@@ -7,7 +9,7 @@ spring:
     nacos:
       server-addr: 124.222.60.243:8848
       discovery:
-        ip: 124.222.224.173
+        #        ip: 124.222.224.173
         group: QING_GROUP
         metadata:
           version: 1.0

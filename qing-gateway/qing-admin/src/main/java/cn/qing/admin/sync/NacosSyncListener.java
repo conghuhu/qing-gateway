@@ -65,7 +65,7 @@ public class NacosSyncListener {
         @Override
         public void run() {
             try {
-                NamingService namingService = nacosUtil.getNamingService();
+                NamingService namingService = NacosUtil.getNamingService();
                 ListView<String> services = namingService.getServicesOfServer(1, Integer.MAX_VALUE, NacosConstants.APP_GROUP_NAME);
                 Map<String, List<ServiceInstance>> serviceMap = WebsocketClientUtil.getServiceMap(namingService, services);
                 eventPublisher.publishEvent(new ServiceUpdateEvent(this, serviceMap));

@@ -21,7 +21,7 @@
     "build-plugin-antd": "^0.1.4",
     "build-plugin-ignore-style": "^0.1.1",
     "eslint": "^8.13.0",
-    "ice.js": "^2.6.2",
+    "ice.js": "^2.6.5",
     "stylelint": "^14.6.1"
   },
   "scripts": {

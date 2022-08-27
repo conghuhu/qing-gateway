@@ -25,11 +25,9 @@ public class NacosUtil {
 
     private final RestTemplate restTemplate;
 
-    private String serverAddr;
+    private static String serverAddr;
 
-    private volatile NamingService namingService;
-
-    private final Object lock = new Object();
+    private volatile static NamingService namingService;
 
     public NacosUtil(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -40,7 +38,7 @@ public class NacosUtil {
     }
 
     public void setServerAddr(String serverAddr) {
-        this.serverAddr = serverAddr;
+        NacosUtil.serverAddr = serverAddr;
     }
 
     /**
@@ -48,9 +46,9 @@ public class NacosUtil {
      *
      * @return
      */
-    public NamingService getNamingService() {
+    public static NamingService getNamingService() {
         if (namingService == null) {
-            synchronized (lock) {
+            synchronized (NacosUtil.class) {
                 if (namingService == null) {
                     try {
                         namingService = NamingFactory.createNamingService(serverAddr);
@@ -66,19 +64,19 @@ public class NacosUtil {
     public void updateInstance(InstanceUpdateParam instanceUpdateParam) {
         try {
             String url = "http://" + serverAddr + NacosConstants.INSTANCE_UPDATE_PATH
-                    + "?serviceName=" + instanceUpdateParam.getServiceName()
-                    + "&ip=" + instanceUpdateParam.getIp()
-                    + "&port=" + instanceUpdateParam.getPort()
-                    + "&groupName=" + NacosConstants.APP_GROUP_NAME
-                    + "&weight=" + instanceUpdateParam.getWeight()
-                    + "&clusterName=" + instanceUpdateParam.getClusterName()
-                    + "&metadata={metadata}";
+                + "?serviceName=" + instanceUpdateParam.getServiceName()
+                + "&ip=" + instanceUpdateParam.getIp()
+                + "&port=" + instanceUpdateParam.getPort()
+                + "&groupName=" + NacosConstants.APP_GROUP_NAME
+                + "&weight=" + instanceUpdateParam.getWeight()
+                + "&clusterName=" + instanceUpdateParam.getClusterName()
+                + "&metadata={metadata}";
             log.info("url:{}", url);
 
             Map<String, String> metaDataMap = new HashMap<>(2);
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("protocol",instanceUpdateParam.getProtocol());
-            jsonObject.put("version",instanceUpdateParam.getVersion());
+            jsonObject.put("protocol", instanceUpdateParam.getProtocol());
+            jsonObject.put("version", instanceUpdateParam.getVersion());
             metaDataMap.put("metadata", jsonObject.toString());
             restTemplate.put(url, null, metaDataMap);
         } catch (Exception e) {

@@ -29,6 +29,7 @@ public class ServiceRuleDTO implements Serializable {
      */
     private String serviceName;
 
+
     /**
      * 优先级，值越大优先级越高
      */

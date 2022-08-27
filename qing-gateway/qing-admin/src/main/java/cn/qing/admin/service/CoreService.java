@@ -152,7 +152,7 @@ public class CoreService {
      */
     public CompletableFuture<Map<String, List<ServiceInstance>>> initServiceInstance() {
         return CompletableFuture.supplyAsync(() -> {
-            NamingService namingService = nacosUtil.getNamingService();
+            NamingService namingService = NacosUtil.getNamingService();
             try {
                 ListView<String> services = namingService.getServicesOfServer(1, Integer.MAX_VALUE, NacosConstants.APP_GROUP_NAME);
                 return WebsocketClientUtil.getServiceMap(namingService, services);

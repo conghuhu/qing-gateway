@@ -16,17 +16,15 @@ import cn.qing.server.spi.LoadBalance;
 import cn.qing.server.utils.HttpUtil;
 import cn.qing.server.utils.SpringContextUtil;
 import cn.qing.server.utils.WebClientUtils;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author conghuhu
@@ -81,8 +79,8 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
         // 利用负载均衡算法选择服务实例
         LoadBalance loadBalance = LoadBalanceFactory.getInstance(properties.getLoadBalance(), serviceName);
         return loadBalance.chooseOne(serviceInstanceList.stream()
-                // TODO 此处有并发修改异常,collect
-                .filter(item -> item.getVersion().equals(version)).collect(Collectors.toList()));
+            // TODO 此处有并发修改异常,collect
+            .filter(item -> item.getVersion().equals(version)).collect(Collectors.toList()));
     }
 
     /**
@@ -110,13 +108,13 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
         ServerHttpRequest request = exchange.getRequest();
         String query = request.getURI().getQuery();
         // TODO 待实现协议转化模块，http->https https->http http->rpc; 还要做一个路由是否重写的判断
-        String path = request.getPath().value().replaceFirst("/" + routeName, "");
+        String path = request.getURI().getPath();
         String protocol = serviceInstance.getProtocol();
         if (!ProtocolConstantMap.PROTOCOL_SET.contains(protocol)) {
-            throw new QingException("不支持的协议类型");
+            throw new QingException("Unsupported protocol type.");
         }
         String url = protocol + "://" + serviceInstance.getIp() + ":" + serviceInstance.getPort() + path;
-        if (StringUtils.hasLength(query)) {
+        if (StringUtils.hasText(query)) {
             url += "?" + query;
         }
         return url;
@@ -132,17 +130,17 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
      * @param url
      */
     private void recordLog(ServerWebExchange exchange, String serviceName,
-                           String routeName, ServiceInstance serviceInstance, String url) {
+        String routeName, ServiceInstance serviceInstance, String url) {
         MultithreadingTaskHandler multithreadingTaskHandler = SpringContextUtil.getBean(MultithreadingTaskHandler.class);
         multithreadingTaskHandler.executeTask(LogDTO.builder()
-                .originIP(HttpUtil.getIpAddress(exchange.getRequest()))
-                .originURI(exchange.getRequest().getPath().value())
-                .proxyURI(url)
-                .routeName(routeName)
-                .targetService(serviceName)
-                .serviceInstance(serviceInstance)
-                .createdTime(LocalDateTime.now())
-                .build());
+            .originIP(HttpUtil.getIpAddress(exchange.getRequest()))
+            .originURI(exchange.getRequest().getPath().value())
+            .proxyURI(url)
+            .routeName(routeName)
+            .targetService(serviceName)
+            .serviceInstance(serviceInstance)
+            .createdTime(LocalDateTime.now())
+            .build());
     }
 
     /**

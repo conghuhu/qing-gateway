@@ -3,7 +3,7 @@ export default {
   default: {
     appId: '1',
     env: 'dev',
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://localhost:8081',
   },
   development: {
     appId: '2',
