@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.springframework.util.StringUtils;
 
 /**
@@ -55,100 +56,118 @@ public class RouteTrie {
 
     private final Map<String, Node> table;
 
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
     public RouteTrie() {
         table = new HashMap<>(16);
     }
 
     public void insertRoute(String routeName, ServiceRuleDTO serviceRule) {
-        if (!StringUtils.hasText(routeName)) {
-            return;
-        }
-        String[] parts = parsePath(routeName);
-
-        String start = parts[0];
-        if (!table.containsKey(start)) {
-            table.put(start, new Node(start));
-        }
-        Node node = table.get(start);
-        for (int i = 1; i < parts.length; i++) {
-            String part = parts[i];
-            Map<String, Node> children = node.children;
-            if (!children.containsKey(part)) {
-                children.put(part, new Node(part,
-                    part.charAt(0) == ':' || part.charAt(0) == '*'));
+        try {
+            lock.writeLock().lock();
+            if (!StringUtils.hasText(routeName)) {
+                return;
             }
-            node = children.get(part);
+            String[] parts = parsePath(routeName);
+
+            String start = parts[0];
+            if (!table.containsKey(start)) {
+                table.put(start, new Node(start));
+            }
+            Node node = table.get(start);
+            for (int i = 1; i < parts.length; i++) {
+                String part = parts[i];
+                Map<String, Node> children = node.children;
+                if (!children.containsKey(part)) {
+                    children.put(part, new Node(part,
+                        part.charAt(0) == ':' || part.charAt(0) == '*'));
+                }
+                node = children.get(part);
+            }
+            // 叶子结点
+            node.isEnd = true;
+            node.serviceRule = serviceRule;
+        } finally {
+            lock.writeLock().unlock();
         }
-        // 叶子结点
-        node.isEnd = true;
-        node.serviceRule = serviceRule;
     }
 
     public ServiceRuleDTO getServiceRule(String path) {
-        if (!StringUtils.hasText(path)) {
-            return null;
-        }
-        String[] parts = parsePath(path);
-        String start = parts[0];
-        Node node = table.get(start);
-        if (node == null) {
-            return null;
-        }
-        for (int i = 1; i < parts.length; i++) {
-            String part = parts[i];
-            Map<String, Node> children = node.children;
-            boolean match = false;
-            for (Node child : children.values()) {
-                if (child.isWild) {
-                    return child.serviceRule;
-                }
-                if (child.part.equals(part)) {
-                    match = true;
-                    break;
-                }
-            }
-            if (!match) {
+        try {
+            lock.readLock().lock();
+            if (!StringUtils.hasText(path)) {
                 return null;
             }
+            String[] parts = parsePath(path);
+            String start = parts[0];
+            Node node = table.get(start);
+            if (node == null) {
+                return null;
+            }
+            for (int i = 1; i < parts.length; i++) {
+                String part = parts[i];
+                Map<String, Node> children = node.children;
+                boolean match = false;
+                for (Node child : children.values()) {
+                    if (child.isWild) {
+                        return child.serviceRule;
+                    }
+                    if (child.part.equals(part)) {
+                        match = true;
+                        break;
+                    }
+                }
+                if (!match) {
+                    return null;
+                }
 
-            node = children.get(part);
+                node = children.get(part);
+            }
+            return node.serviceRule;
+        } finally {
+            lock.readLock().unlock();
         }
-        return node.serviceRule;
+
     }
 
     public void removeRouteRule(String routeName) {
-        ServiceRuleDTO serviceRule = getServiceRule(routeName);
-        if (serviceRule == null) {
-            return;
-        }
-        String[] parts = parsePath(routeName);
-        String start = parts[0];
-        Stack<Node> stack = new Stack<>();
-        Node node = table.get(start);
-        stack.push(node);
-        for (int i = 1; i < parts.length; i++) {
-            String part = parts[i];
-            Map<String, Node> children = node.children;
-            if (!children.containsKey(part)) {
+        try {
+            lock.writeLock().lock();
+            ServiceRuleDTO serviceRule = getServiceRule(routeName);
+            if (serviceRule == null) {
                 return;
             }
-            node = children.get(part);
+            String[] parts = parsePath(routeName);
+            String start = parts[0];
+            Stack<Node> stack = new Stack<>();
+            Node node = table.get(start);
             stack.push(node);
-        }
-        stack.pop();
-        int deep = stack.size();
-        while (!stack.isEmpty()) {
-            Node pop = stack.pop();
-            if (pop.children.size() == 1) {
-                pop.children.remove(parts[deep--]);
-            } else {
-                pop.children.remove(parts[deep]);
-                return;
+            for (int i = 1; i < parts.length; i++) {
+                String part = parts[i];
+                Map<String, Node> children = node.children;
+                if (!children.containsKey(part)) {
+                    return;
+                }
+                node = children.get(part);
+                stack.push(node);
             }
-        }
-        Node top = table.get(start);
+            stack.pop();
+            int deep = stack.size();
+            while (!stack.isEmpty()) {
+                Node pop = stack.pop();
+                if (pop.children.size() == 1) {
+                    pop.children.remove(parts[deep--]);
+                } else {
+                    pop.children.remove(parts[deep]);
+                    return;
+                }
+            }
+            Node top = table.get(start);
 
-        table.remove(top.part);
+            table.remove(top.part);
+        } finally {
+            lock.writeLock().unlock();
+        }
 
     }
 
