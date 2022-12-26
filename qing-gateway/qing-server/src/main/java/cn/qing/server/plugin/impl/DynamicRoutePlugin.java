@@ -58,7 +58,7 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
         log.info("服务[{}]对应的服务实例[{}]，转发目标url[{}]", serviceName, serviceInstance, url);
         recordLog(exchange, serviceName, routeName, serviceInstance, url);
         // 动态获取IOC容器中的WebClientUtils
-        WebClientUtils webClientUtils = SpringContextUtil.getBean(WebClientUtils.class);
+        WebClientUtils webClientUtils = SpringContextUtil.getInstance().getBean(WebClientUtils.class);
         return webClientUtils.execute(exchange, url);
     }
 
@@ -131,7 +131,7 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
      */
     private void recordLog(ServerWebExchange exchange, String serviceName,
         String routeName, ServiceInstance serviceInstance, String url) {
-        MultithreadingTaskHandler multithreadingTaskHandler = SpringContextUtil.getBean(MultithreadingTaskHandler.class);
+        MultithreadingTaskHandler multithreadingTaskHandler = SpringContextUtil.getInstance().getBean(MultithreadingTaskHandler.class);
         multithreadingTaskHandler.executeTask(LogDTO.builder()
             .originIP(HttpUtil.getIpAddress(exchange.getRequest()))
             .originURI(exchange.getRequest().getPath().value())

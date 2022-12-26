@@ -113,7 +113,7 @@ public class DataSyncTask extends WebSocketServer {
         }
         // 负载均衡
         else if (eventType.equals(EventTypeEnum.LOAD_BALANCE.getName())) {
-            ServerConfigProperties serverConfigProperties = SpringContextUtil.getBean(ServerConfigProperties.class);
+            ServerConfigProperties serverConfigProperties = SpringContextUtil.getInstance().getBean(ServerConfigProperties.class);
             if (actionType.equals(ActionTypeEnum.UPDATE.getCode())) {
                 serverConfigProperties.setLoadBalance(websocketMessageDTO.getDetail());
             }
