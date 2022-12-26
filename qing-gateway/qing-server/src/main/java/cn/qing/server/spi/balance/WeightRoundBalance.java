@@ -9,9 +9,8 @@ import cn.qing.server.spi.LoadBalance;
 import java.util.List;
 
 /**
- * @Author: Ship
- * @Description:
- * @Date: Created in 2020/12/30
+ * @author conghuu
+ * @create Created in 2020/12/30
  */
 @LoadBalanceType(LoadBalanceConstants.WEIGHT_ROUND)
 public class WeightRoundBalance implements LoadBalance {

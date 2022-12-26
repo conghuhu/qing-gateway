@@ -1,7 +1,5 @@
 package cn.qing.server.spi.balance;
 
-
-
 import cn.qing.common.constants.LoadBalanceConstants;
 import cn.qing.common.dto.ServiceInstance;
 import cn.qing.server.annotation.LoadBalanceType;
@@ -12,7 +10,8 @@ import java.util.Random;
 
 /**
  * 随机算法
- * @author Administrator
+ *
+ * @author conghuhu
  */
 @LoadBalanceType(LoadBalanceConstants.RANDOM)
 public class RandomBalance implements LoadBalance {

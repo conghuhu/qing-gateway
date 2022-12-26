@@ -2,9 +2,9 @@ spring:
   application:
     name: qing-gateway
   redis:
-    host: 101.201.143.127
+    host: 47.113.189.237
     port: 6379
-    password:
+    password: cong0917
     timeout: 5000
     connect-timeout: 5000
 

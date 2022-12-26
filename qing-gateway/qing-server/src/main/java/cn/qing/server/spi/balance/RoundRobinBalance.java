@@ -1,6 +1,5 @@
 package cn.qing.server.spi.balance;
 
-
 import cn.qing.common.constants.LoadBalanceConstants;
 import cn.qing.common.dto.ServiceInstance;
 import cn.qing.server.annotation.LoadBalanceType;
@@ -10,8 +9,8 @@ import java.util.List;
 
 /**
  * 轮询算法
- * Created by 2YSP on 2020/12/27
- * @author Administrator
+ *
+ * @author conghuhu
  */
 @LoadBalanceType(LoadBalanceConstants.LOAD_BALANCE_ROUND_ROBIN)
 public class RoundRobinBalance implements LoadBalance {
