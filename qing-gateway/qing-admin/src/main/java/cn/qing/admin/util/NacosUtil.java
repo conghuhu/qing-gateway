@@ -6,12 +6,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
-import com.alibaba.nacos.shaded.com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,14 +62,14 @@ public class NacosUtil {
     public void updateInstance(InstanceUpdateParam instanceUpdateParam) {
         try {
             String url = "http://" + serverAddr + NacosConstants.INSTANCE_UPDATE_PATH
-                + "?serviceName=" + instanceUpdateParam.getServiceName()
-                + "&ip=" + instanceUpdateParam.getIp()
-                + "&port=" + instanceUpdateParam.getPort()
-                + "&groupName=" + NacosConstants.APP_GROUP_NAME
-                + "&weight=" + instanceUpdateParam.getWeight()
-                + "&clusterName=" + instanceUpdateParam.getClusterName()
-                + "&metadata={metadata}";
-            log.info("url:{}", url);
+                    + "?serviceName=" + instanceUpdateParam.getServiceName()
+                    + "&ip=" + instanceUpdateParam.getIp()
+                    + "&port=" + instanceUpdateParam.getPort()
+                    + "&groupName=" + NacosConstants.APP_GROUP_NAME
+                    + "&weight=" + instanceUpdateParam.getWeight()
+                    + "&clusterName=" + instanceUpdateParam.getClusterName()
+                    + "&metadata={metadata}";
+            log.debug("nacos url: {}", url);
 
             Map<String, String> metaDataMap = new HashMap<>(2);
             JSONObject jsonObject = new JSONObject();
