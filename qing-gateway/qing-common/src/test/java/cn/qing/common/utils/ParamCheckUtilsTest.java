@@ -17,16 +17,15 @@
 
 package cn.qing.common.utils;
 
-
 import cn.qing.common.exception.QingException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 /**
  * Test cases for ParamCheckUtils.
@@ -43,11 +42,9 @@ public final class ParamCheckUtilsTest {
 
     @Test
     public void testcheckParamsLength() {
-        try {
+        assertDoesNotThrow(() -> {
             ParamCheckUtils.checkParamsLength(2, 2);
-        } catch (Exception e) {
-            assertNull(e);
-        }
+        });
     }
 
     @Test

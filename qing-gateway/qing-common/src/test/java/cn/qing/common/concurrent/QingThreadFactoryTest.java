@@ -17,8 +17,7 @@
 
 package cn.qing.common.concurrent;
 
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ThreadFactory;
 
@@ -26,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
 /**
- * Test cases for ShenyuThreadFactory.
+ * Test cases for QingThreadFactory.
  */
 public final class QingThreadFactoryTest {
 

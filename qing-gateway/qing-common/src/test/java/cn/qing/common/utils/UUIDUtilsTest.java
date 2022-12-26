@@ -17,8 +17,7 @@
 
 package cn.qing.common.utils;
 
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -27,9 +26,9 @@ import java.lang.reflect.Method;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
