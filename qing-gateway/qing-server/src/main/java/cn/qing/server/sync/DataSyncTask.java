@@ -1,7 +1,7 @@
 package cn.qing.server.sync;
 
-import cn.qing.common.constants.ActionTypeEnum;
-import cn.qing.common.constants.EventTypeEnum;
+import cn.qing.common.enums.ActionTypeEnum;
+import cn.qing.common.enums.EventTypeEnum;
 import cn.qing.common.exception.QingException;
 import cn.qing.common.dto.WebsocketMessageDTO;
 import cn.qing.server.cache.IdentificationCache;

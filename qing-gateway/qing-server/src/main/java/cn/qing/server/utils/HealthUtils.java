@@ -6,7 +6,6 @@ import cn.qing.common.dto.MemInfoDTO;
 import cn.qing.common.dto.SysInfoDTO;
 import cn.qing.common.dto.ThreadInfoDTO;
 import cn.qing.common.dto.ThreadInfoItemDTO;
-import cn.qing.common.pojo.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;

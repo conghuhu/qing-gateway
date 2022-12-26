@@ -1,4 +1,4 @@
-package cn.qing.common.constants;
+package cn.qing.common.enums;
 
 /**
  * @author conghuhu

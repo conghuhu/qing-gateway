@@ -1,6 +1,6 @@
 package cn.qing.server.plugin.impl;
 
-import cn.qing.common.constants.QingPluginEnum;
+import cn.qing.common.enums.QingPluginEnum;
 import cn.qing.server.chain.QingPluginChain;
 import cn.qing.server.plugin.base.AbstractQingPlugin;
 import lombok.extern.slf4j.Slf4j;

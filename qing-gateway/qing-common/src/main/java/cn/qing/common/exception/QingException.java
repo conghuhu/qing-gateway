@@ -1,6 +1,6 @@
 package cn.qing.common.exception;
 
-import cn.qing.common.constants.QingExceptionEnum;
+import cn.qing.common.enums.QingExceptionEnum;
 import lombok.Getter;
 
 /**
@@ -13,7 +13,6 @@ public class QingException extends RuntimeException {
     private Integer code;
 
     private String errMsg;
-
 
     public QingException(String message) {
         super(message);
@@ -32,6 +31,4 @@ public class QingException extends RuntimeException {
         this.code = exceptionEnum.getCode();
         this.errMsg = exceptionEnum.getMessage();
     }
-
-
 }

@@ -1,6 +1,6 @@
 package cn.qing.server.handler;
 
-import cn.qing.common.constants.QingExceptionEnum;
+import cn.qing.common.enums.QingExceptionEnum;
 import cn.qing.common.exception.QingException;
 import cn.qing.common.dto.ServiceRuleDTO;
 import cn.qing.server.cache.RouteRuleCache;

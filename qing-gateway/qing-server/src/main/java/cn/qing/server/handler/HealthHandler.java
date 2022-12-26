@@ -6,7 +6,6 @@ import cn.qing.common.dto.MemInfoDTO;
 import cn.qing.common.dto.SysInfoDTO;
 import cn.qing.common.dto.ThreadInfoDTO;
 import cn.qing.common.exception.QingException;
-import cn.qing.common.pojo.dto.*;
 import cn.qing.server.utils.HealthUtils;
 import cn.qing.server.utils.RedisSyncUtil;
 import com.alibaba.fastjson.JSON;

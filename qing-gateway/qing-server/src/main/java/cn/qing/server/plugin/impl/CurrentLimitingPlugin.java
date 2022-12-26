@@ -1,6 +1,6 @@
 package cn.qing.server.plugin.impl;
 
-import cn.qing.common.constants.QingPluginEnum;
+import cn.qing.common.enums.QingPluginEnum;
 import cn.qing.common.dto.LimitRuleDTO;
 import cn.qing.server.cache.LimitRuleCache;
 import cn.qing.server.chain.QingPluginChain;

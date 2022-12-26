@@ -1,8 +1,8 @@
 package cn.qing.server.plugin.impl;
 
 import cn.qing.common.constants.ProtocolConstantMap;
-import cn.qing.common.constants.QingExceptionEnum;
-import cn.qing.common.constants.QingPluginEnum;
+import cn.qing.common.enums.QingExceptionEnum;
+import cn.qing.common.enums.QingPluginEnum;
 import cn.qing.common.exception.QingException;
 import cn.qing.common.dto.LogDTO;
 import cn.qing.common.dto.ServiceInstance;
