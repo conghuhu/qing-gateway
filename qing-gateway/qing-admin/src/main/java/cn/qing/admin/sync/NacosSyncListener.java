@@ -40,8 +40,8 @@ public class NacosSyncListener {
     private final ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
 
     public NacosSyncListener() {
-        this.nacosUtil = SpringContextUtil.getBean(NacosUtil.class);
-        this.scheduledThreadPoolExecutor = SpringContextUtil.getBean(ScheduledThreadPoolExecutor.class);
+        this.nacosUtil = SpringContextUtil.getInstance().getBean(NacosUtil.class);
+        this.scheduledThreadPoolExecutor = SpringContextUtil.getInstance().getBean(ScheduledThreadPoolExecutor.class);
         this.init();
     }
 

@@ -10,37 +10,35 @@ import org.springframework.context.ConfigurableApplicationContext;
  *
  * @author conghuhu
  * @create 2022-04-05 16:26
+ * @update 2022-12-26 16:23
  */
-public class SpringContextUtil {
+public final class SpringContextUtil {
 
-    private static ApplicationContext applicationContext;
+    private static final SpringContextUtil INSTANCE = new SpringContextUtil();
 
-    /**
-     * 获取spring上下文
-     *
-     * @return
-     */
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
+    private ApplicationContext applicationContext;
+
+    public static SpringContextUtil getInstance() {
+        return INSTANCE;
     }
 
     /**
      * 设置上下文
      *
-     * @param applicationContext
+     * @param applicationContext application context
      */
-    public static void setApplicationContext(ApplicationContext applicationContext) {
-        SpringContextUtil.applicationContext = applicationContext;
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
 
     /**
      * 通过名字获取上下文中的bean
      *
-     * @param name
-     * @return
+     * @param name bean name
+     * @return bean
      */
-    public static Object getBean(String name) {
+    public Object getBean(String name) {
         return applicationContext.getBean(name);
     }
 
@@ -48,10 +46,10 @@ public class SpringContextUtil {
     /**
      * 通过类型获取上下文中的bean
      *
-     * @param requiredType
-     * @return
+     * @param requiredType bean type
+     * @return bean
      */
-    public static <T> T getBean(Class<T> requiredType) {
+    public <T> T getBean(Class<T> requiredType) {
         return applicationContext.getBean(requiredType);
     }
 
@@ -59,21 +57,27 @@ public class SpringContextUtil {
     /**
      * 通过名字和类型获取上下文中的bean
      *
-     * @param name
-     * @param requiredType
-     * @return
+     * @param name         bean name
+     * @param requiredType bean type
+     * @return bean
      */
-    public static <T> T getBean(String name, Class<T> requiredType) {
+    public <T> T getBean(String name, Class<T> requiredType) {
         return applicationContext.getBean(name, requiredType);
     }
 
     /**
      * 动态注入Bean
+     *
+     * @param beanClass bean classz
+     * @param beanName  bean name
+     * @param args      arguments
+     * @param <T>       type
+     * @return bean
      */
-    public static <T> T addBean(Class<T> beanClass, String beanName, Object... args) {
+    public <T> T addBean(Class<T> beanClass, String beanName, Object... args) {
         //将applicationContext转换为ConfigurableApplicationContext
         ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext)
-                SpringContextUtil.getApplicationContext();
+                this.applicationContext;
 
         // 获取bean工厂并转换为DefaultListableBeanFactory
         DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory)
@@ -95,12 +99,14 @@ public class SpringContextUtil {
 
     /**
      * 删除bean
+     *
+     * @param beanName bean name
+     * @return res boolean
      */
-    public static Boolean removeBean(String beanName) {
+    public Boolean removeBean(String beanName) {
         try {
             //将applicationContext转换为ConfigurableApplicationContext
-            ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext)
-                    SpringContextUtil.getApplicationContext();
+            ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) applicationContext;
 
             // 获取bean工厂并转换为DefaultListableBeanFactory
             DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory)

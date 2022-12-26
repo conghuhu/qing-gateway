@@ -22,22 +22,8 @@ public class QingAdminApplication {
     }
 
     public static void main(String[] args) throws Exception {
-        ApplicationContext applicationContext = SpringApplication.run(QingAdminApplication.class, args);
+        SpringApplication.run(QingAdminApplication.class, args);
         log.info("QingAdminApplication start success");
-        run(applicationContext, args);
-    }
-
-    /**
-     * 系统初始化
-     *
-     * @param applicationContext
-     * @param args
-     * @throws Exception
-     */
-    public static void run(ApplicationContext applicationContext, String[] args) throws Exception {
-        SpringContextUtil.setApplicationContext(applicationContext);
-        SystemInitStarter systemInitStarter = SpringContextUtil.getBean(SystemInitStarter.class);
-        systemInitStarter.run(args);
     }
 
 }

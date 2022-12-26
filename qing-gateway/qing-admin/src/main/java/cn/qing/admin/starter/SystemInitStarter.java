@@ -19,7 +19,6 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -52,10 +51,9 @@ public class SystemInitStarter {
     /**
      * 初始化系统，检测是否有历史配置，如果没有则初始化
      *
-     * @param args
      * @throws Exception
      */
-    public void run(String... args) throws Exception {
+    public void run() throws Exception {
         log.info("检测到应用启动，开始初始化系统...");
         InitParam initParam = new InitParam();
         QNacosInfo nacosInfo = nacosInfoService.getOne(new LambdaQueryWrapper<>());

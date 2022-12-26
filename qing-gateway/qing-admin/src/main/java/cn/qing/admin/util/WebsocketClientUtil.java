@@ -33,7 +33,7 @@ public class WebsocketClientUtil {
      */
     public static void sendToAll(List<String> websocketBeanList, WebsocketMessageDTO websocketMessageDTO) {
         for (String beanName : websocketBeanList) {
-            WebsocketSyncCacheClient websocketSyncCacheClient = SpringContextUtil.getBean(beanName, WebsocketSyncCacheClient.class);
+            WebsocketSyncCacheClient websocketSyncCacheClient = SpringContextUtil.getInstance().getBean(beanName, WebsocketSyncCacheClient.class);
             websocketSyncCacheClient.send(websocketMessageDTO);
         }
     }
@@ -47,7 +47,7 @@ public class WebsocketClientUtil {
      * @return
      * @throws NacosException
      */
-    public static Map<String, List<ServiceInstance>> getServiceMap(NamingService namingService,ListView<String> services) throws NacosException {
+    public static Map<String, List<ServiceInstance>> getServiceMap(NamingService namingService, ListView<String> services) throws NacosException {
         List<String> servicesList = services.getData();
         Map<String, List<ServiceInstance>> serviceMap = new ConcurrentHashMap<>(servicesList.size());
         servicesList.parallelStream().forEach(service -> {

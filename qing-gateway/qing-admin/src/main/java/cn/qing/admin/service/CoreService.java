@@ -112,7 +112,7 @@ public class CoreService {
         // 遍历websocketUriList，向IOC中注入websocketBean
         for (String uri : websocketUriList) {
             String beanName = "websocketSyncCacheClient" + SEQUENCE.intValue();
-            SpringContextUtil.addBean(WebsocketSyncCacheClient.class,
+            SpringContextUtil.getInstance().addBean(WebsocketSyncCacheClient.class,
                     beanName, uri, beanName);
             websocketBeanMap.put(beanName, true);
             SEQUENCE.getAndIncrement();
@@ -140,7 +140,7 @@ public class CoreService {
         // 阻塞等待
         Map<String, List<ServiceInstance>> serviceMap = serviceMapFuture.get();
         // 启动NacosSyncListener，轮询更新nacos数据
-        SpringContextUtil.addBean(NacosSyncListener.class, "nacosSyncListener");
+        SpringContextUtil.getInstance().addBean(NacosSyncListener.class, "nacosSyncListener");
         // 发布serviceAdd事件
         eventPublisher.publishEvent(new ServiceAddEvent(this, serviceMap));
     }
@@ -301,11 +301,11 @@ public class CoreService {
     private void cleanAllData() {
         // 关闭所有网关websocket连接
         for (String beanName : getWebsocketBeanList()) {
-            SpringContextUtil.getBean(beanName, WebsocketSyncCacheClient.class).close();
-            SpringContextUtil.removeBean(beanName);
+            SpringContextUtil.getInstance().getBean(beanName, WebsocketSyncCacheClient.class).close();
+            SpringContextUtil.getInstance().removeBean(beanName);
         }
-        SpringContextUtil.getBean("nacosSyncListener", NacosSyncListener.class).shutdown();
-        SpringContextUtil.removeBean("nacosSyncListener");
+        SpringContextUtil.getInstance().getBean("nacosSyncListener", NacosSyncListener.class).shutdown();
+        SpringContextUtil.getInstance().removeBean("nacosSyncListener");
         cleanAllCache();
 
         NacosInfoService.clean();
@@ -346,8 +346,8 @@ public class CoreService {
      */
     public void removeGateWayNode(String beanName) {
         websocketBeanMap.remove(beanName);
-        SpringContextUtil.getBean(beanName, WebsocketSyncCacheClient.class).close();
-        SpringContextUtil.removeBean(beanName);
+        SpringContextUtil.getInstance().getBean(beanName, WebsocketSyncCacheClient.class).close();
+        SpringContextUtil.getInstance().removeBean(beanName);
     }
 
     /**
@@ -359,7 +359,7 @@ public class CoreService {
     public QWebsocketInfo addGateWayNode(String websocketUri) {
         String beanName = "websocketSyncCacheClient" + SEQUENCE.intValue();
         SEQUENCE.getAndIncrement();
-        SpringContextUtil.addBean(WebsocketSyncCacheClient.class,
+        SpringContextUtil.getInstance().addBean(WebsocketSyncCacheClient.class,
                 beanName, websocketUri, beanName);
         websocketBeanMap.put(beanName, true);
         QWebsocketInfo websocketInfo = QWebsocketInfo.builder()

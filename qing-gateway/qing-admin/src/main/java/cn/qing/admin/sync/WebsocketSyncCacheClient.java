@@ -59,7 +59,7 @@ public class WebsocketSyncCacheClient implements InitializingBean {
                             .detail(websocketSessionId)
                             .build();
                     send(JSON.toJSONString(messageDTO));
-                    CoreService coreService = SpringContextUtil.getBean(CoreService.class);
+                    CoreService coreService = SpringContextUtil.getInstance().getBean(CoreService.class);
                     coreService.changeWebsocketStatus(serverWebSocketUrl, true);
                 }
 
@@ -72,7 +72,7 @@ public class WebsocketSyncCacheClient implements InitializingBean {
                     String actionType = websocketMessageDTO.getActionType();
 
                     if (eventType.equals(EventTypeEnum.ONLINE.getName())) {
-                        CoreService coreService = SpringContextUtil.getBean(CoreService.class);
+                        CoreService coreService = SpringContextUtil.getInstance().getBean(CoreService.class);
                         coreService.refresh();
                     }
                     // 负载均衡
@@ -85,7 +85,7 @@ public class WebsocketSyncCacheClient implements InitializingBean {
                     }
                     // 调用行为日志
                     else if (eventType.equals(EventTypeEnum.LOG.getName())) {
-                        QLogService logService = SpringContextUtil.getBean(QLogService.class);
+                        QLogService logService = SpringContextUtil.getInstance().getBean(QLogService.class);
                         List<LogDTO> logDTOList = websocketMessageDTO.getLogDTOList();
                         List<QLog> logList = new ArrayList<>();
                         logDTOList.forEach(logDTO -> {
@@ -106,14 +106,14 @@ public class WebsocketSyncCacheClient implements InitializingBean {
                 @Override
                 public void onClose(int i, String s, boolean b) {
                     log.info("admin websocket close");
-                    CoreService coreService = SpringContextUtil.getBean(CoreService.class);
+                    CoreService coreService = SpringContextUtil.getInstance().getBean(CoreService.class);
                     coreService.changeWebsocketStatus(serverWebSocketUrl, false);
                 }
 
                 @Override
                 public void onError(Exception e) {
                     log.error("websocket client error", e);
-                    CoreService coreService = SpringContextUtil.getBean(CoreService.class);
+                    CoreService coreService = SpringContextUtil.getInstance().getBean(CoreService.class);
                     coreService.changeWebsocketStatus(serverWebSocketUrl, false);
                 }
             };
