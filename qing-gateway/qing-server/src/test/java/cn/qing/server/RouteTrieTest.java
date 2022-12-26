@@ -1,6 +1,6 @@
 package cn.qing.server;
 
-import cn.qing.common.pojo.dto.ServiceRuleDTO;
+import cn.qing.common.dto.ServiceRuleDTO;
 import cn.qing.server.utils.RouteTrie;
 import java.util.concurrent.CountDownLatch;
 import lombok.extern.slf4j.Slf4j;

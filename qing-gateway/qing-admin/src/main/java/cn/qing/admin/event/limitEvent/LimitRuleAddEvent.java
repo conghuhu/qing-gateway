@@ -1,7 +1,6 @@
 package cn.qing.admin.event.limitEvent;
 
-import cn.qing.admin.entity.QLimitRule;
-import cn.qing.common.pojo.dto.LimitRuleDTO;
+import cn.qing.common.dto.LimitRuleDTO;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.Map;

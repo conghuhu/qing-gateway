@@ -1,9 +1,9 @@
 package cn.qing.server.sync;
 
-import cn.qing.common.pojo.dto.CpuInfoDTO;
-import cn.qing.common.pojo.dto.JvmInfoDTO;
-import cn.qing.common.pojo.dto.MemInfoDTO;
-import cn.qing.common.pojo.dto.ThreadInfoDTO;
+import cn.qing.common.dto.CpuInfoDTO;
+import cn.qing.common.dto.JvmInfoDTO;
+import cn.qing.common.dto.MemInfoDTO;
+import cn.qing.common.dto.ThreadInfoDTO;
 import cn.qing.server.cache.IdentificationCache;
 import cn.qing.server.utils.HealthUtils;
 import cn.qing.server.utils.RedisSyncUtil;

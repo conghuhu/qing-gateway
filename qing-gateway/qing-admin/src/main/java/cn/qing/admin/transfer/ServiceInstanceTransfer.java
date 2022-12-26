@@ -1,6 +1,6 @@
 package cn.qing.admin.transfer;
 
-import cn.qing.common.pojo.dto.ServiceInstance;
+import cn.qing.common.dto.ServiceInstance;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 
 import java.util.ArrayList;

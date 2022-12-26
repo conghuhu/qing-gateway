@@ -7,7 +7,7 @@ import cn.qing.admin.pojo.vo.ServiceInfoVo;
 import cn.qing.admin.service.QServiceInstanceService;
 import cn.qing.admin.service.QServiceService;
 import cn.qing.admin.util.NacosUtil;
-import cn.qing.common.pojo.vo.Result;
+import cn.qing.admin.pojo.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;

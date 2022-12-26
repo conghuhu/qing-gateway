@@ -1,9 +1,8 @@
-package cn.qing.common.pojo.dto;
+package cn.qing.common.dto;
 
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data

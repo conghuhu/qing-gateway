@@ -2,26 +2,19 @@ package cn.qing.admin.sync;
 
 import cn.qing.admin.event.serviceEvent.ServiceRemoveEvent;
 import cn.qing.admin.event.serviceEvent.ServiceUpdateEvent;
-import cn.qing.admin.factory.QingThreadFactory;
-import cn.qing.admin.transfer.ServiceInstanceTransfer;
 import cn.qing.admin.util.NacosUtil;
 import cn.qing.admin.util.SpringContextUtil;
 import cn.qing.admin.util.WebsocketClientUtil;
 import cn.qing.common.constants.NacosConstants;
-import cn.qing.common.exception.QingException;
-import cn.qing.common.pojo.dto.ServiceInstance;
-import com.alibaba.nacos.api.exception.NacosException;
+import cn.qing.common.dto.ServiceInstance;
 import com.alibaba.nacos.api.naming.NamingService;
-import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.api.naming.pojo.ListView;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 

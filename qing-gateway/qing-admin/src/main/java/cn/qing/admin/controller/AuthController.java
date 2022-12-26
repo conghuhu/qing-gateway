@@ -3,10 +3,9 @@ package cn.qing.admin.controller;
 
 import cn.qing.admin.pojo.params.RegisterParam;
 import cn.qing.admin.service.QUserService;
-import cn.qing.common.pojo.vo.Result;
+import cn.qing.admin.pojo.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

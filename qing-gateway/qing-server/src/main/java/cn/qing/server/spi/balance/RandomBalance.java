@@ -3,7 +3,7 @@ package cn.qing.server.spi.balance;
 
 
 import cn.qing.common.constants.LoadBalanceConstants;
-import cn.qing.common.pojo.dto.ServiceInstance;
+import cn.qing.common.dto.ServiceInstance;
 import cn.qing.server.annotation.LoadBalanceType;
 import cn.qing.server.spi.LoadBalance;
 

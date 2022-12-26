@@ -1,6 +1,6 @@
 package cn.qing.server.cache;
 
-import cn.qing.common.pojo.dto.ServiceInstance;
+import cn.qing.common.dto.ServiceInstance;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

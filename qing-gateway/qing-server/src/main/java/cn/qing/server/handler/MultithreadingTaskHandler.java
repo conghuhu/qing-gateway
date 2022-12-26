@@ -1,10 +1,8 @@
 package cn.qing.server.handler;
 
-import cn.qing.common.pojo.dto.LogDTO;
+import cn.qing.common.dto.LogDTO;
 import cn.qing.server.cache.LogCache;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**

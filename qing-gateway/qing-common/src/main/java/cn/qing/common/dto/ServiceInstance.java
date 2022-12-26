@@ -1,4 +1,4 @@
-package cn.qing.common.pojo.dto;
+package cn.qing.common.dto;
 
 import lombok.Data;
 

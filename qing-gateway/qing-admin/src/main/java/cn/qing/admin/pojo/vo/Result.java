@@ -1,4 +1,4 @@
-package cn.qing.common.pojo.vo;
+package cn.qing.admin.pojo.vo;
 
 import cn.qing.common.constants.CommonConstant;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package cn.qing.server.utils;
 
 import cn.qing.common.exception.QingException;
-import cn.qing.common.pojo.dto.ServiceRuleDTO;
+import cn.qing.common.dto.ServiceRuleDTO;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

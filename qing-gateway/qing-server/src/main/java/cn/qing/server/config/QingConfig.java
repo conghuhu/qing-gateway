@@ -1,6 +1,6 @@
 package cn.qing.server.config;
 
-import cn.qing.common.pojo.dto.ServiceRuleDTO;
+import cn.qing.common.dto.ServiceRuleDTO;
 import cn.qing.server.cache.RouteRuleCache;
 import cn.qing.server.config.properties.RouteConfigProperties;
 import cn.qing.server.config.properties.ServerConfigProperties;
@@ -12,10 +12,8 @@ import cn.qing.server.plugin.impl.DynamicRoutePlugin;
 import cn.qing.server.utils.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.server.WebHandler;
 
 import java.util.*;
 import java.util.stream.Collectors;

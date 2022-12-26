@@ -5,7 +5,7 @@ import cn.qing.admin.entity.QWebsocketInfo;
 import cn.qing.admin.pojo.params.WebsocketParam;
 import cn.qing.admin.service.CoreService;
 import cn.qing.admin.service.QWebsocketInfoService;
-import cn.qing.common.pojo.vo.Result;
+import cn.qing.admin.pojo.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;

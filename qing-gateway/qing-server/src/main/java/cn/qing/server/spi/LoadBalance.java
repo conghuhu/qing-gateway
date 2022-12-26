@@ -1,6 +1,6 @@
 package cn.qing.server.spi;
 
-import cn.qing.common.pojo.dto.ServiceInstance;
+import cn.qing.common.dto.ServiceInstance;
 
 import java.util.List;
 

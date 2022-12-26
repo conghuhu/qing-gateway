@@ -1,6 +1,5 @@
 package cn.qing.admin.event.ruleEvent;
 
-import cn.qing.common.pojo.dto.ServiceRuleDTO;
 import org.springframework.context.ApplicationEvent;
 
 /**

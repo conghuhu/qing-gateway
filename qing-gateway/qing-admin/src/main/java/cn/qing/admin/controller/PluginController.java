@@ -3,7 +3,7 @@ package cn.qing.admin.controller;
 
 import cn.qing.admin.entity.QPlugin;
 import cn.qing.admin.service.QPluginService;
-import cn.qing.common.pojo.vo.Result;
+import cn.qing.admin.pojo.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

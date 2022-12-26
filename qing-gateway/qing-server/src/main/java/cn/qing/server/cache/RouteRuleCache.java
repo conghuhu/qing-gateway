@@ -1,7 +1,7 @@
 package cn.qing.server.cache;
 
 import cn.qing.common.exception.QingException;
-import cn.qing.common.pojo.dto.ServiceRuleDTO;
+import cn.qing.common.dto.ServiceRuleDTO;
 import cn.qing.server.utils.RouteTrie;
 import lombok.extern.slf4j.Slf4j;
 

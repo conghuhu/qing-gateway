@@ -2,7 +2,7 @@ package cn.qing.server.handler;
 
 import cn.qing.common.constants.QingExceptionEnum;
 import cn.qing.common.exception.QingException;
-import cn.qing.common.pojo.dto.ServiceRuleDTO;
+import cn.qing.common.dto.ServiceRuleDTO;
 import cn.qing.server.cache.RouteRuleCache;
 import cn.qing.server.cache.ServiceCache;
 import cn.qing.server.chain.DefaultQingPluginChain;

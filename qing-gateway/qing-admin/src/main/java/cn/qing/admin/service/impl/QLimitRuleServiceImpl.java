@@ -7,11 +7,10 @@ import cn.qing.admin.event.limitEvent.LimitRuleUpdateEvent;
 import cn.qing.admin.mapper.QLimitRuleMapper;
 import cn.qing.admin.service.QLimitRuleService;
 import cn.qing.common.exception.QingException;
-import cn.qing.common.pojo.dto.LimitRuleDTO;
+import cn.qing.common.dto.LimitRuleDTO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 

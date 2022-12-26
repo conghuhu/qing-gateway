@@ -1,6 +1,6 @@
 package cn.qing.server.cache;
 
-import cn.qing.common.pojo.dto.LimitRuleDTO;
+import cn.qing.common.dto.LimitRuleDTO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;

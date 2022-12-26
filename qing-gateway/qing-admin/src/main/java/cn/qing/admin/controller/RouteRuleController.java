@@ -5,7 +5,7 @@ import cn.qing.admin.entity.QRouteRule;
 import cn.qing.admin.pojo.vo.RouteRuleVo;
 import cn.qing.admin.service.QRouteRuleService;
 import cn.qing.admin.pojo.params.RouteRuleParam;
-import cn.qing.common.pojo.vo.Result;
+import cn.qing.admin.pojo.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;

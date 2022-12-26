@@ -1,6 +1,10 @@
 package cn.qing.admin.pojo.vo;
 
-import cn.qing.common.pojo.dto.*;
+import cn.qing.common.dto.CpuInfoDTO;
+import cn.qing.common.dto.JvmInfoDTO;
+import cn.qing.common.dto.MemInfoDTO;
+import cn.qing.common.dto.QpsDTO;
+import cn.qing.common.dto.ThreadInfoDTO;
 import lombok.Data;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package cn.qing.admin.handler;
 
 import cn.qing.common.exception.QingException;
-import cn.qing.common.pojo.vo.Result;
+import cn.qing.admin.pojo.vo.Result;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

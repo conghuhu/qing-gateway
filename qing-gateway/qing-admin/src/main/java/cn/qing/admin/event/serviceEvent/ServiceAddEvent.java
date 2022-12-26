@@ -1,6 +1,6 @@
 package cn.qing.admin.event.serviceEvent;
 
-import cn.qing.common.pojo.dto.ServiceInstance;
+import cn.qing.common.dto.ServiceInstance;
 import org.springframework.context.ApplicationEvent;
 
 import java.util.List;

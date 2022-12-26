@@ -1,17 +1,11 @@
 package cn.qing.server.cache;
 
-import cn.qing.common.constants.ActionTypeEnum;
-import cn.qing.common.constants.EventTypeEnum;
-import cn.qing.common.pojo.dto.LogDTO;
-import cn.qing.common.pojo.dto.QpsDTO;
-import cn.qing.common.pojo.dto.WebsocketMessageDTO;
+import cn.qing.common.dto.QpsDTO;
 import cn.qing.server.utils.RedisSyncUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;

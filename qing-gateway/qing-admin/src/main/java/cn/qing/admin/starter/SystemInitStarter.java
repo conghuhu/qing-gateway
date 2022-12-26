@@ -9,7 +9,7 @@ import cn.qing.admin.service.CoreService;
 import cn.qing.admin.service.QNacosInfoService;
 import cn.qing.admin.service.QRouteRuleService;
 import cn.qing.admin.service.QWebsocketInfoService;
-import cn.qing.common.pojo.dto.ServiceRuleDTO;
+import cn.qing.common.dto.ServiceRuleDTO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
