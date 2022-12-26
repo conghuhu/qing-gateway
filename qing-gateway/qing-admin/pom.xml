@@ -16,8 +16,9 @@
     <properties>
         <java.version>1.8</java.version>
         <nacos-client.version>2.0.0</nacos-client.version>
-        <java-websocket.version>1.5.2</java-websocket.version>
-        <mybatisplus.version>3.4.1</mybatisplus.version>
+        <java-websocket.version>1.5.3</java-websocket.version>
+        <mybatisplus.version>3.5.2</mybatisplus.version>
+        <mybatisplus.generate.version>3.5.3</mybatisplus.generate.version>
     </properties>
     <dependencies>
         <dependency>
@@ -73,7 +74,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>${mybatisplus.version}</version>
+            <version>${mybatisplus.generate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.freemarker</groupId>
@@ -103,6 +104,10 @@
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>com.baomidou</groupId>
+                            <artifactId>mybatis-plus-generator</artifactId>
                         </exclude>
                     </excludes>
                 </configuration>

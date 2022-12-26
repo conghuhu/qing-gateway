@@ -64,7 +64,7 @@
     </dependencies>
 
     <build>
-        <finalName>server</finalName>
+        <finalName>qing_server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

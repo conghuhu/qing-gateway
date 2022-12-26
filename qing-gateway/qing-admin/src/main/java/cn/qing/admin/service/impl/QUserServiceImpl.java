@@ -39,7 +39,7 @@ public class QUserServiceImpl extends ServiceImpl<QUserMapper, QUser> implements
         String password = registerParam.getPassword();
         QUser user = new QUser();
         try {
-            Integer selectCount = userMapper.selectCount(new LambdaQueryWrapper<QUser>().eq(QUser::getUsername, username));
+            Long selectCount = userMapper.selectCount(new LambdaQueryWrapper<QUser>().eq(QUser::getUsername, username));
             if (selectCount > 0) {
                 return null;
             }
