@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 qing-gateway
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.qing.common.utils;
 
 import java.io.BufferedReader;
@@ -53,10 +68,11 @@ public class LicenseCopyUtils implements FileFilter {
         String headerBody = readLicenseHeader(in, charset);
         System.out.println(headerBody);
         System.out.println("读取并格式化license完成...");
-//        if (root.isDirectory() || root.getName().endsWith(".java")) {
-//            System.out.println("开始处理：" + root.getAbsolutePath());
-//            processLicenseHeader(root, charset, headerBody);
-//        }
+        System.out.println(root.getAbsolutePath());
+        if (root.isDirectory() || root.getName().endsWith(".java")) {
+            System.out.println("开始处理：" + root.getAbsolutePath());
+            processLicenseHeader(root, charset, headerBody);
+        }
     }
 
     private void processLicenseHeader(File root, String charset, String headerBody) throws IOException {
@@ -100,7 +116,7 @@ public class LicenseCopyUtils implements FileFilter {
 
     public static void main(String[] args) throws IOException {
         LicenseCopyUtils licenseCopyUtils = new LicenseCopyUtils();
-        licenseCopyUtils.processLicenseHeader(new File("sD:\\MainProject\\Qing_Gateway\\qing-gateway\\qing-common\\src\\main\\java\\cn\\qing\\common"),
+        licenseCopyUtils.processLicenseHeader(new File("D:\\MainProject\\Qing_Gateway\\qing-gateway\\qing-common\\src\\test\\java\\cn\\qing\\common"),
                 new FileInputStream("D:\\MainProject\\Qing_Gateway\\qing-gateway\\qing-common\\src\\main\\resources\\license.txt"), "UTF-8");
     }
 }
