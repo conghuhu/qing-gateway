@@ -15,7 +15,13 @@
  */
 package cn.qing.common.utils;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.CompressionCodecs;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.SneakyThrows;
 
 import java.util.Date;
 
@@ -23,30 +29,59 @@ public class JwtTokenUtil {
     /**
      * 24小时
      */
-    private static long tokenExpiration = 24 * 60 * 60 * 1000;
+    private static final long TOKEN_EXPIRATION = 24 * 60 * 60 * 1000;
     /**
      * 秘钥
      */
-    private static String tokenSignKey = "cong0917lovebiyanqichangchangjiujiumeimanruhehydjasghdhasdujsagdiuyashduasghyduiasduhasdghajkshdgj";
+    private static final String TOKEN_SIGN_KEY = "cong0917lovebiyanqichangchangjiujiumeimanruhehydjasghdhasdujsagdiuyashduasghyduiasduhasdghajkshdgj";
 
-    private static String passwordKey = "conghuhu";
+    private static final String PASSWORD_KEY = "password";
 
+    /**
+     * 生成token
+     *
+     * @param userName username
+     * @param password password
+     * @return token
+     */
+    @SneakyThrows
     public static String createToken(String userName, String password) {
-        return Jwts.builder().setSubject(userName)
-                .claim(passwordKey, password).setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration))
-                .signWith(SignatureAlgorithm.HS512, tokenSignKey)
+        return Jwts.builder()
+                .setSubject(userName)
+                .claim(PASSWORD_KEY, password)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
+                .signWith(SignatureAlgorithm.HS512, TOKEN_SIGN_KEY)
                 .compressWith(CompressionCodecs.GZIP)
                 .compact();
     }
 
+    @SneakyThrows
     public static String getUserNameFromToken(String token) throws ExpiredJwtException, MalformedJwtException {
-        String userName = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token).getBody().getSubject();
-        return userName;
+        return getClaimsFromToken(token).getSubject();
     }
 
-    public static String getUserPasswordFromToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token).getBody();
-        return claims.get(passwordKey).toString();
+    /**
+     * 判断token是否失效
+     *
+     * @param token string
+     * @return boolean
+     */
+    public static boolean isTokenExpired(String token) {
+        Date expiredDate = getExpiredDateFromToken(token);
+        return expiredDate.after(new Date());
+    }
+
+    private static Date getExpiredDateFromToken(String token) {
+        return getClaimsFromToken(token).getExpiration();
+    }
+
+    @SneakyThrows
+    private static Claims getClaimsFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(TOKEN_SIGN_KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

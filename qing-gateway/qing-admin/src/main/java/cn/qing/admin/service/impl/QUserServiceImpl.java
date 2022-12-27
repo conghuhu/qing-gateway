@@ -124,10 +124,15 @@ public class QUserServiceImpl extends ServiceImpl<QUserMapper, QUser> implements
      */
     @Override
     public Boolean checkToken(String token) {
-        UserInfo userInfo = (UserInfo) redisUtil.get("Token_" + token);
-        if (userInfo == null) {
+        try {
+            if (!JwtTokenUtil.isTokenExpired(token)) {
+                return false;
+            }
+            UserInfo userInfo = (UserInfo) redisUtil.get("Token_" + token);
+            return userInfo != null;
+        } catch (Exception e) {
+            log.error("校验token发生错误: {}", e.getMessage());
             return false;
         }
-        return true;
     }
 }
