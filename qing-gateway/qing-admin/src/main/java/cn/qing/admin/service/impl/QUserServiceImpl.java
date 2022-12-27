@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,8 +25,10 @@ import cn.qing.admin.util.RedisUtil;
 import cn.qing.common.utils.JwtTokenUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -37,6 +39,7 @@ import java.util.HashMap;
  * @author conghuhu
  * @since 2022-04-24
  */
+@Slf4j
 @Service
 public class QUserServiceImpl extends ServiceImpl<QUserMapper, QUser> implements QUserService {
 
@@ -48,6 +51,7 @@ public class QUserServiceImpl extends ServiceImpl<QUserMapper, QUser> implements
         this.userMapper = userMapper;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String register(RegisterParam registerParam) {
         String username = registerParam.getUsername();
@@ -69,7 +73,8 @@ public class QUserServiceImpl extends ServiceImpl<QUserMapper, QUser> implements
             return getToken(user);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            log.error("注册失败，参数为: {}", registerParam);
+            throw e;
         }
     }
 

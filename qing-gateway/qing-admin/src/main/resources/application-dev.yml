@@ -11,9 +11,9 @@ spring:
       matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://150.158.97.5:3306/qing_test?useUnicode=true&characterEncoding=UTF-8&serverTimeZone=UTC&rewriteBatchedStatements=true
+    url: jdbc:mysql://rm-bp16zo6wbvx2741gv6o.mysql.rds.aliyuncs.com:3306/qing_test?useUnicode=true&characterEncoding=UTF-8&serverTimeZone=UTC&rewriteBatchedStatements=true
     username: root
-    password: cong0917
+    password: '@Cong0917'
     hikari:
       minimum-idle: 10
       maximum-pool-size: 20

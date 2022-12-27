@@ -16,7 +16,6 @@
 package cn.qing.admin.config;
 
 import cn.qing.admin.handler.MyInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
