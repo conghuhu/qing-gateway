@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,15 +17,15 @@ package cn.qing.admin.sync;
 
 import cn.qing.admin.cache.LoadBalanceCache;
 import cn.qing.admin.entity.QLog;
-import cn.qing.admin.factory.QingThreadFactory;
 import cn.qing.admin.service.CoreService;
 import cn.qing.admin.service.QLogService;
 import cn.qing.admin.util.SpringContextUtil;
+import cn.qing.common.concurrent.QingThreadFactory;
+import cn.qing.common.dto.LogDTO;
+import cn.qing.common.dto.WebsocketMessageDTO;
 import cn.qing.common.enums.ActionTypeEnum;
 import cn.qing.common.enums.EventTypeEnum;
 import cn.qing.common.exception.QingException;
-import cn.qing.common.dto.LogDTO;
-import cn.qing.common.dto.WebsocketMessageDTO;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.SneakyThrows;
@@ -63,7 +63,7 @@ public class WebsocketSyncCacheClient implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         executor = new ScheduledThreadPoolExecutor(1,
-                new QingThreadFactory("socket-connect").create());
+                QingThreadFactory.create("socket-connect", true));
         try {
             client = new WebSocketClient(new URI(serverWebSocketUrl)) {
                 @Override

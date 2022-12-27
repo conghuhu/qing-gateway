@@ -15,13 +15,19 @@
  */
 package cn.qing.server;
 
+import cn.qing.common.concurrent.QingThreadFactory;
 import cn.qing.common.dto.ServiceRuleDTO;
 import cn.qing.server.utils.RouteTrie;
-import java.util.concurrent.CountDownLatch;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 前缀树测试
@@ -31,11 +37,8 @@ public class RouteTrieTest {
 
     private static RouteTrie routeTrie = null;
 
-    private static long startTime;
-
     @BeforeAll
     public static void start() {
-        startTime = System.currentTimeMillis();
         routeTrie = new RouteTrie();
     }
 
@@ -80,17 +83,20 @@ public class RouteTrieTest {
         routeTrie.removeRouteRule("/api/test/*");
         ServiceRuleDTO oldRule = routeTrie.getServiceRule("/api/test/hi");
         Assertions.assertNull(oldRule);
-
         routeTrie.removeRouteRule("/api/medical/*");
     }
 
     @Test
     public void testMultiThreadRoute() throws InterruptedException {
-        CountDownLatch countDownLatch = new CountDownLatch(1);
-        for (int i = 0; i < 35; i++) {
-            new Thread(new Run(countDownLatch)).start();
+        int count = 10000;
+        CountDownLatch countDownLatch = new CountDownLatch(count);
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(32, 32, 2,
+                TimeUnit.SECONDS, new LinkedBlockingDeque<>(count),
+                QingThreadFactory.create("trie-test", true));
+        for (int i = 0; i < count; i++) {
+            threadPoolExecutor.execute(new Run(countDownLatch));
         }
-        countDownLatch.countDown();
+        countDownLatch.await();
     }
 
     class Run implements Runnable {
@@ -103,16 +109,22 @@ public class RouteTrieTest {
         @Override
         public void run() {
             try {
-                startLatch.await();
+                long insertStartTime = System.currentTimeMillis();
+                String path = String.format("/api/test%d/*", new Random().nextInt());
+                routeTrie.insertRoute(path, ServiceRuleDTO.builder().serviceName("medical").routeName("/api/test/*").build());
+                log.info("insert cost {} ms", System.currentTimeMillis() - insertStartTime);
 
-                testWildRoute();
+                long getStartTime = System.currentTimeMillis();
+                ServiceRuleDTO serviceRule = routeTrie.getServiceRule(path);
+                log.info("get cost {} ms", System.currentTimeMillis() - getStartTime);
+                Assertions.assertNotNull(serviceRule);
 
-                long endTime = System.currentTimeMillis();
-                System.out.println(Thread.currentThread().getName() + " ended at: " + endTime + ", cost: " + (endTime - startTime) + " ms.");
+                routeTrie.removeRouteRule(path);
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                startLatch.countDown();
             }
-
         }
     }
 
