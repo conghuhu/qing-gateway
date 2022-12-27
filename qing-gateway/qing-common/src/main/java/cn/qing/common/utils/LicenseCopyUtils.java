@@ -29,7 +29,7 @@ public class LicenseCopyUtils implements FileFilter {
      */
     public String readLicenseHeader(InputStream in, String charset) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(in, charset));
-        StringBuilder builder = new StringBuilder("/**\r\n");
+        StringBuilder builder = new StringBuilder("/*\r\n");
         String line = null;
         while ((line = reader.readLine()) != null) {
             builder.append(" * ");
@@ -53,10 +53,10 @@ public class LicenseCopyUtils implements FileFilter {
         String headerBody = readLicenseHeader(in, charset);
         System.out.println(headerBody);
         System.out.println("读取并格式化license完成...");
-        if (root.isDirectory() || root.getName().endsWith(".java")) {
-            System.out.println("开始处理：" + root.getAbsolutePath());
-            processLicenseHeader(root, charset, headerBody);
-        }
+//        if (root.isDirectory() || root.getName().endsWith(".java")) {
+//            System.out.println("开始处理：" + root.getAbsolutePath());
+//            processLicenseHeader(root, charset, headerBody);
+//        }
     }
 
     private void processLicenseHeader(File root, String charset, String headerBody) throws IOException {
@@ -100,7 +100,7 @@ public class LicenseCopyUtils implements FileFilter {
 
     public static void main(String[] args) throws IOException {
         LicenseCopyUtils licenseCopyUtils = new LicenseCopyUtils();
-        licenseCopyUtils.processLicenseHeader(new File("src/main/java"),
-                new FileInputStream("license.txt"), "UTF-8");
+        licenseCopyUtils.processLicenseHeader(new File("sD:\\MainProject\\Qing_Gateway\\qing-gateway\\qing-common\\src\\main\\java\\cn\\qing\\common"),
+                new FileInputStream("D:\\MainProject\\Qing_Gateway\\qing-gateway\\qing-common\\src\\main\\resources\\license.txt"), "UTF-8");
     }
 }
