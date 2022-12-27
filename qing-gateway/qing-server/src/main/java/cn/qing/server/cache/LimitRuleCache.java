@@ -33,7 +33,7 @@ public class LimitRuleCache {
     /**
      * 添加限流规则
      *
-     * @param limitRuleDTO
+     * @param limitRuleMap
      */
     public static void addLimitRule(Map<String, LimitRuleDTO> limitRuleMap) {
         LIMIT_RULE_MAP.putAll(limitRuleMap);

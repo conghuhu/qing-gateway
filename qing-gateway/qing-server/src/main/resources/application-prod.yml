@@ -9,12 +9,7 @@ spring:
     connect-timeout: 5000
 server:
   port: 8101
-#  ssl:
-#    enabled: true
-#    key-store: classpath:myssl.keystore
-#    key-store-password: cong0917
-#    keyAlias: tomcat
-#    keyStoreType: JKS
+
 qing:
   server:
     load-balance: round_robin

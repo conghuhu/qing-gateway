@@ -10,13 +10,11 @@ spring:
 
 server:
   port: 8101
-  ssl:
-    enabled: true
-    key-store: classpath:myssl.keystore
-    key-store-password: cong0917
-    keyAlias: tomcat
-    keyStoreType: JKS
+
 qing:
+  admin:
+    infos:
+      - url: localhost:8081
   server:
     load-balance: round_robin
     timeout-millis: 5000
@@ -26,11 +24,10 @@ qing:
     - uri: traffic
       predicates: /test
       priority: 100
-
-web:
-  client:
-    pending-acquire-timeout: 25 # 超时时间 单位秒
-    pending-acquire-max-count: 10000 # 最大等待数
-    max-connections: 1000 # 最大连接数
-    max-idle-time: 30 # 最大空闲时间 单位秒
-    work-counts: 10 # 线程数
+  web:
+    client:
+      pending-acquire-timeout: 25 # 超时时间 单位秒
+      pending-acquire-max-count: 10000 # 最大等待数
+      max-connections: 1000 # 最大连接数
+      max-idle-time: 30 # 最大空闲时间 单位秒
+      work-counts: 10 # 线程数

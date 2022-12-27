@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  * @author conghuhu
  * @create 2022-04-06 10:41
  */
-@ConfigurationProperties("web.client")
+@ConfigurationProperties("qing.web.client")
 @Data
 @Configuration
 public class WebClientProperties {

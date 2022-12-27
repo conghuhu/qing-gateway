@@ -15,9 +15,8 @@
  */
 package cn.qing.server;
 
-import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
@@ -34,9 +33,7 @@ public class QingServerApplication {
     }
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(QingServerApplication.class)
-                .web(WebApplicationType.REACTIVE)
-                .run(args);
+        SpringApplication.run(QingServerApplication.class, args);
     }
 
 }

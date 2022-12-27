@@ -47,7 +47,9 @@ public class QingConfig {
 
     private final RateLimiter rateLimiter;
 
-    public QingConfig(RouteConfigProperties routeConfigProperties, ServerConfigProperties serverConfigProperties, RateLimiter rateLimiter) {
+    public QingConfig(RouteConfigProperties routeConfigProperties,
+                      ServerConfigProperties serverConfigProperties,
+                      RateLimiter rateLimiter) {
         this.routeConfigProperties = routeConfigProperties;
         this.serverConfigProperties = serverConfigProperties;
         this.rateLimiter = rateLimiter;
