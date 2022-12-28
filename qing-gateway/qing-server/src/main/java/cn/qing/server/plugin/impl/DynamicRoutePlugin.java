@@ -15,12 +15,13 @@
  */
 package cn.qing.server.plugin.impl;
 
+import cn.qing.common.constants.CommonConstant;
 import cn.qing.common.constants.ProtocolConstantMap;
+import cn.qing.common.dto.LogDTO;
+import cn.qing.common.dto.ServiceInstance;
 import cn.qing.common.enums.QingExceptionEnum;
 import cn.qing.common.enums.QingPluginEnum;
 import cn.qing.common.exception.QingException;
-import cn.qing.common.dto.LogDTO;
-import cn.qing.common.dto.ServiceInstance;
 import cn.qing.server.cache.ServiceCache;
 import cn.qing.server.chain.QingPluginChain;
 import cn.qing.server.config.properties.ServerConfigProperties;
@@ -30,16 +31,16 @@ import cn.qing.server.plugin.base.AbstractQingPlugin;
 import cn.qing.server.spi.LoadBalance;
 import cn.qing.server.utils.HttpUtil;
 import cn.qing.server.utils.SpringContextUtil;
-import cn.qing.server.utils.WebClientUtils;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author conghuhu
@@ -71,10 +72,9 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
         // 根据路由规则获取此次转发目标服务的url
         String url = getTargetUrl(exchange, serviceInstance, routeName);
         log.info("服务[{}]对应的服务实例[{}]，转发目标url[{}]", serviceName, serviceInstance, url);
+        exchange.getAttributes().put(CommonConstant.HTTP_URI, url);
         recordLog(exchange, serviceName, routeName, serviceInstance, url);
-        // 动态获取IOC容器中的WebClientUtils
-        WebClientUtils webClientUtils = SpringContextUtil.getInstance().getBean(WebClientUtils.class);
-        return webClientUtils.execute(exchange, url);
+        return chain.doChain(exchange);
     }
 
     /**
@@ -94,8 +94,8 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
         // 利用负载均衡算法选择服务实例
         LoadBalance loadBalance = LoadBalanceFactory.getInstance(properties.getLoadBalance(), serviceName);
         return loadBalance.chooseOne(serviceInstanceList.stream()
-            // TODO 此处有并发修改异常,collect
-            .filter(item -> item.getVersion().equals(version)).collect(Collectors.toList()));
+                // TODO 此处有并发修改异常,collect
+                .filter(item -> item.getVersion().equals(version)).collect(Collectors.toList()));
     }
 
     /**
@@ -145,17 +145,17 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
      * @param url
      */
     private void recordLog(ServerWebExchange exchange, String serviceName,
-        String routeName, ServiceInstance serviceInstance, String url) {
+                           String routeName, ServiceInstance serviceInstance, String url) {
         MultithreadingTaskHandler multithreadingTaskHandler = SpringContextUtil.getInstance().getBean(MultithreadingTaskHandler.class);
         multithreadingTaskHandler.executeTask(LogDTO.builder()
-            .originIP(HttpUtil.getIpAddress(exchange.getRequest()))
-            .originURI(exchange.getRequest().getPath().value())
-            .proxyURI(url)
-            .routeName(routeName)
-            .targetService(serviceName)
-            .serviceInstance(serviceInstance)
-            .createdTime(LocalDateTime.now())
-            .build());
+                .originIP(HttpUtil.getIpAddress(exchange.getRequest()))
+                .originURI(exchange.getRequest().getPath().value())
+                .proxyURI(url)
+                .routeName(routeName)
+                .targetService(serviceName)
+                .serviceInstance(serviceInstance)
+                .createdTime(LocalDateTime.now())
+                .build());
     }
 
     /**

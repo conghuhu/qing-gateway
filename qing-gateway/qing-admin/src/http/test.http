@@ -1,5 +1,5 @@
 ### 测试转发
-GET https://localhost:8101/today/traffic/getTraffic
+GET http://localhost:8101/traffic/getTraffic
 
 ### 限流，每分钟2次
 POST https://localhost:8101/today/traffic/getTraffic

@@ -10,6 +10,10 @@ spring:
 server:
   port: 8101
 
+logging:
+  level:
+    cn.qing.server: info
+
 qing:
   server:
     load-balance: round_robin

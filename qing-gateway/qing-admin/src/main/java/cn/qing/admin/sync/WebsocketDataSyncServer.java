@@ -61,6 +61,7 @@ public class WebsocketDataSyncServer extends WebSocketServer {
         this.start();
     }
 
+    @SneakyThrows
     @Override
     public void onOpen(WebSocket conn, ClientHandshake clientHandshake) {
         String clientId = UUIDUtils.getInstance().generateShortUuid();
@@ -77,6 +78,8 @@ public class WebsocketDataSyncServer extends WebSocketServer {
                 .detail(clientId)
                 .build();
         conn.send(JSON.toJSONString(websocketMessageDTO));
+        CoreService coreService = SpringContextUtil.getInstance().getBean(CoreService.class);
+        coreService.refresh(conn);
     }
 
     @Override
@@ -95,12 +98,8 @@ public class WebsocketDataSyncServer extends WebSocketServer {
         String eventType = websocketMessageDTO.getEventType();
         String actionType = websocketMessageDTO.getActionType();
 
-        if (eventType.equals(EventTypeEnum.ONLINE.getName())) {
-            CoreService coreService = SpringContextUtil.getInstance().getBean(CoreService.class);
-            coreService.refresh(conn);
-        }
         // 负载均衡
-        else if (eventType.equals(EventTypeEnum.LOAD_BALANCE.getName())) {
+        if (eventType.equals(EventTypeEnum.LOAD_BALANCE.getName())) {
             if (actionType.equals(ActionTypeEnum.QUERY.getCode())) {
                 List<String> loadBalanceList = websocketMessageDTO.getLoadBalanceList();
                 LoadBalanceCache.addAll(loadBalanceList);

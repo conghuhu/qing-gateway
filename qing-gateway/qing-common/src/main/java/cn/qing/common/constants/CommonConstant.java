@@ -97,6 +97,30 @@ public interface CommonConstant {
     /** Token缓存时间：3600秒即一小时 */
     public static final int  TOKEN_EXPIRE_TIME  = 3600;
 
+    /**
+     * The constant HTTP_TIME_OUT.
+     */
+    String HTTP_TIME_OUT = "httpTimeOut";
+
+    /**
+     * The constant HTTP_URI.
+     */
+    String HTTP_URI = "httpUri";
+
+    /**
+     * The constant CLIENT_RESPONSE_ATTR.
+     */
+    String CLIENT_RESPONSE_ATTR = "webHandlerClientResponse";
+
+    /**
+     * http accept encoding gzip.
+     */
+    String HTTP_ACCEPT_ENCODING_GZIP = "gzip";
+
+    /**
+     * The constant CLIENT_RESPONSE_RESULT_TYPE.
+     */
+    String CLIENT_RESPONSE_RESULT_TYPE = "webHandlerClientResponseResultType";
 
     /**
      *  0：一级菜单

@@ -18,18 +18,22 @@ package cn.qing.server.utils;
 import cn.qing.server.config.properties.ServerConfigProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
 import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -79,7 +83,8 @@ public class WebClientUtils {
 
         log.info("网关处理完成:{}", url);
 
-        return reqHeadersSpec.exchange().timeout(Duration.ofMillis(serverConfigProperties.getTimeOutMillis()))
+        return reqHeadersSpec.exchange()
+                .timeout(Duration.ofMillis(serverConfigProperties.getTimeOutMillis()))
                 .onErrorResume(ex -> Mono.defer(() -> {
                     String errorResultJson = "";
                     if (ex instanceof TimeoutException) {

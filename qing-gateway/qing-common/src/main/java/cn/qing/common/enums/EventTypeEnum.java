@@ -47,11 +47,6 @@ public enum EventTypeEnum {
     LOAD_BALANCE("loadBalance"),
 
     /**
-     * 上线初始化相关
-     */
-    ONLINE("online"),
-
-    /**
      * 限流规则相关
      */
     LIMIT_RULE("limitRule"),

@@ -103,7 +103,7 @@ public class WebsocketDataSyncClient implements ApplicationListener<ContextRefre
      * @param messageDTO
      */
     public void sendMessage(WebsocketMessageDTO messageDTO) {
-        send(JSON.toJSONString(messageDTO));
+        send(messageDTO);
     }
 
     /**
@@ -153,6 +153,7 @@ public class WebsocketDataSyncClient implements ApplicationListener<ContextRefre
         @SneakyThrows
         @Override
         public void onMessage(String message) {
+            log.debug("收到来自admin的msg: {}", message);
             WebsocketMessageDTO websocketMessageDTO = JSONObject.parseObject(message, WebsocketMessageDTO.class);
             String eventType = websocketMessageDTO.getEventType();
             String actionType = websocketMessageDTO.getActionType();

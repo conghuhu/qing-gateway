@@ -15,10 +15,16 @@
  */
 package cn.qing.server.utils;
 
+import cn.qing.common.constants.CommonConstant;
+import cn.qing.common.utils.ObjectTypeUtils;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * @author conghuhu
@@ -27,8 +33,23 @@ import reactor.core.publisher.Mono;
 public class QingResponseUtil {
     public static Mono<Void> doResponse(ServerWebExchange exchange, String resp) {
         Assert.notNull(resp, "response object can't be null");
-        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        // basic data use text/plain
+        MediaType mediaType = MediaType.TEXT_PLAIN;
+        if (!ObjectTypeUtils.isBasicType(resp)) {
+            mediaType = getContentType(exchange);
+        }
+        exchange.getResponse().getHeaders().setContentType(mediaType);
         return exchange.getResponse().writeWith(Mono.just(exchange.getResponse()
-                .bufferFactory().wrap(resp.getBytes())));
+                        .bufferFactory().wrap(resp.getBytes()))
+                .doOnNext(data -> exchange.getResponse().getHeaders().setContentLength(data.readableByteCount())));
+    }
+
+
+    private static MediaType getContentType(ServerWebExchange exchange) {
+        final ClientResponse clientResponse = exchange.getAttribute(CommonConstant.CLIENT_RESPONSE_ATTR);
+        if (Objects.nonNull(clientResponse) && clientResponse.headers().contentType().isPresent()) {
+            return clientResponse.headers().contentType().get();
+        }
+        return MediaType.APPLICATION_JSON;
     }
 }

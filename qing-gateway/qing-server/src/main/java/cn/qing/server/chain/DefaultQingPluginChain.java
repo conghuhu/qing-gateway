@@ -87,15 +87,17 @@ public class DefaultQingPluginChain implements QingPluginChain {
      */
     @Override
     public Mono<Void> doChain(final ServerWebExchange exchange) {
-        if (this.position < plugins.size()) {
-            QingPlugin plugin = plugins.get(this.position++);
-            boolean skip = plugin.skip(exchange);
-            if (skip) {
-                return this.doChain(exchange);
+        return Mono.defer(() -> {
+            if (this.position < plugins.size()) {
+                QingPlugin plugin = plugins.get(this.position++);
+                boolean skip = plugin.skip(exchange);
+                if (skip) {
+                    return this.doChain(exchange);
+                }
+                return plugin.execute(exchange, this);
             }
-            return plugin.execute(exchange, this);
-        }
-        return Mono.empty();
+            return Mono.empty();
+        });
     }
 
 }
