@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,12 +15,12 @@
  */
 package cn.qing.admin.util;
 
-import cn.qing.admin.sync.WebsocketSyncCacheClient;
+import cn.qing.admin.sync.WebsocketDataSyncServer;
 import cn.qing.admin.transfer.ServiceInstanceTransfer;
 import cn.qing.common.constants.NacosConstants;
-import cn.qing.common.exception.QingException;
 import cn.qing.common.dto.ServiceInstance;
 import cn.qing.common.dto.WebsocketMessageDTO;
+import cn.qing.common.exception.QingException;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
@@ -43,13 +43,19 @@ public class WebsocketClientUtil {
     /**
      * 向所有网关节点发送消息
      *
-     * @param websocketBeanList
      * @param websocketMessageDTO
      */
-    public static void sendToAll(List<String> websocketBeanList, WebsocketMessageDTO websocketMessageDTO) {
-        for (String beanName : websocketBeanList) {
-            WebsocketSyncCacheClient websocketSyncCacheClient = SpringContextUtil.getInstance().getBean(beanName, WebsocketSyncCacheClient.class);
-            websocketSyncCacheClient.send(websocketMessageDTO);
+    public static void sendToAll(WebsocketMessageDTO websocketMessageDTO) {
+        WebsocketDataSyncServer websocketDataSyncServer = SpringContextUtil.getInstance().getBean(WebsocketDataSyncServer.class);
+        websocketDataSyncServer.sendToAll(websocketMessageDTO);
+    }
+
+    public static void closeServer() {
+        WebsocketDataSyncServer websocketDataSyncServer = SpringContextUtil.getInstance().getBean(WebsocketDataSyncServer.class);
+        try {
+            websocketDataSyncServer.stop();
+        } catch (InterruptedException e) {
+            throw new QingException(e.getMessage());
         }
     }
 

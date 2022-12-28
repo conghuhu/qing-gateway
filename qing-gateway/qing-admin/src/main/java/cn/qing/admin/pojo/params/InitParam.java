@@ -31,9 +31,4 @@ public class InitParam {
      */
     private String nacosServerAddr;
 
-    /**
-     * 网关websocket地址
-     */
-    private List<String> websocketUriList;
-
 }

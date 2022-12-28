@@ -32,5 +32,12 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
 
+qing:
+  sync:
+    websocket:
+      enabled: true
+      port: 9099
+      messageMaxSize: 8192
+
 
 # http://101.201.143.127:8080/swagger-ui/index.html#/

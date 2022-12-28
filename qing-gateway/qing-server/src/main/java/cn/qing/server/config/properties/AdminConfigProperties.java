@@ -21,7 +21,7 @@ public class AdminConfigProperties {
      */
     private List<AdminInfo> infos;
 
-    static class AdminInfo {
+    public static class AdminInfo {
         String url;
 
         public AdminInfo() {

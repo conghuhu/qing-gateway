@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,15 +18,17 @@ package cn.qing.admin.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.beans.Transient;
-import java.time.LocalDateTime;
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @author conghuhu
@@ -45,11 +47,8 @@ public class QWebsocketInfo implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "网关所在websocket地址")
-    private String uri;
-
-    @ApiModelProperty(value = "在IOC中的bean名称")
-    private String beanName;
+    @ApiModelProperty(value = "网关节点的UUID")
+    private String clientId;
 
     @ApiModelProperty(value = "是否开启，1开启0未开启")
     private Boolean enabled;
@@ -61,7 +60,6 @@ public class QWebsocketInfo implements Serializable {
     @ApiModelProperty(value = "实例ip")
     private String ip;
 
-    @TableField(exist = false)
-    @ApiModelProperty(value = "实例状态")
+    @ApiModelProperty(value = "实例状态, 1运行0异常")
     private Boolean status;
 }

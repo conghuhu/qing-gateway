@@ -14,7 +14,7 @@ server:
 qing:
   admin:
     infos:
-      - url: localhost:8081
+      - url: localhost:9099
   server:
     load-balance: round_robin
     timeout-millis: 5000

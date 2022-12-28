@@ -32,4 +32,11 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+qing:
+  sync:
+    websocket:
+      enabled: true
+      port: 9099
+      messageMaxSize: 8192
+
 # http://localhost:8080/swagger-ui/index.html

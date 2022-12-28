@@ -4,14 +4,12 @@
 
     <insert id="insertByReplace" parameterType="object">
         insert
-        ignore
-        into `q_websocket_info` (`uri`,`bean_name`,`enabled`,`created_time`,`ip`)
-        values (
-        #{websocketInfo.uri},
-        #{websocketInfo.beanName},
-        #{websocketInfo.enabled},
-        #{websocketInfo.createdTime},
-        #{websocketInfo.ip}
-        )
+            ignore
+        into `q_websocket_info` (`enabled`, `created_time`, `ip`, `client_id`, `status`)
+        values (#{websocketInfo.enabled},
+                #{websocketInfo.createdTime},
+                #{websocketInfo.ip},
+                #{websocketInfo.clientId},
+                #{websocketInfo.status})
     </insert>
 </mapper>

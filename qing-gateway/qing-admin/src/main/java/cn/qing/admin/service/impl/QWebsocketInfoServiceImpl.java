@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,7 +18,6 @@ package cn.qing.admin.service.impl;
 import cn.qing.admin.entity.QWebsocketInfo;
 import cn.qing.admin.mapper.QWebsocketInfoMapper;
 import cn.qing.admin.service.QWebsocketInfoService;
-import cn.qing.common.exception.QingException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -71,28 +70,12 @@ public class QWebsocketInfoServiceImpl extends ServiceImpl<QWebsocketInfoMapper,
     }
 
     @Override
-    public String changeWebsocketStatus(String serverWebSocketUrl, Boolean status) {
-        QWebsocketInfo websocketInfo = websocketInfoMapper.selectOne(new LambdaQueryWrapper<QWebsocketInfo>()
-                .eq(QWebsocketInfo::getUri, serverWebSocketUrl));
-        if (websocketInfo == null) {
-            return null;
-        }
-        return websocketInfo.getBeanName();
-    }
-
-    /**
-     * 根据id移除websocket信息
-     *
-     * @param id
-     */
-    @Override
-    public String removeGateWayNode(Long id) {
-        QWebsocketInfo websocketInfo = websocketInfoMapper.selectById(id);
-        if (websocketInfo == null) {
-            throw new QingException("该节点不存在");
-        }
-        websocketInfoMapper.deleteById(id);
-        return websocketInfo.getBeanName();
+    public Boolean changeWebsocketStatus(String clientId, Boolean status) {
+        QWebsocketInfo info = new QWebsocketInfo();
+        info.setStatus(status);
+        int res = websocketInfoMapper.update(info, new LambdaQueryWrapper<QWebsocketInfo>()
+                .eq(QWebsocketInfo::getClientId, clientId));
+        return res > 0;
     }
 
     @Override

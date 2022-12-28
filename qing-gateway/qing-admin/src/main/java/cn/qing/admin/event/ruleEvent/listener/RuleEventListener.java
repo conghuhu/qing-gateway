@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -44,13 +44,12 @@ public class RuleEventListener {
     @EventListener
     public void onAddRule(RuleAddEvent ruleAddEvent) {
         Map<String, ServiceRuleDTO> serviceRuleMap = ruleAddEvent.getServiceRuleMap();
-        List<String> websocketBeanList = CoreService.getWebsocketBeanList();
         WebsocketMessageDTO websocketMessageDTO = WebsocketMessageDTO.builder()
                 .eventType(EventTypeEnum.RULE.getName())
                 .actionType(ActionTypeEnum.ADD.getCode())
                 .routeRuleMap(serviceRuleMap)
                 .build();
-        WebsocketClientUtil.sendToAll(websocketBeanList, websocketMessageDTO);
+        WebsocketClientUtil.sendToAll(websocketMessageDTO);
         log.info("添加规则：{}", serviceRuleMap);
     }
 
@@ -58,13 +57,12 @@ public class RuleEventListener {
     @EventListener
     public void onUpdateRule(RuleUpdateEvent ruleUpdateEvent) {
         Map<String, ServiceRuleDTO> serviceRuleMap = ruleUpdateEvent.getServiceRuleMap();
-        List<String> websocketBeanList = CoreService.getWebsocketBeanList();
         WebsocketMessageDTO websocketMessageDTO = WebsocketMessageDTO.builder()
                 .eventType(EventTypeEnum.RULE.getName())
                 .actionType(ActionTypeEnum.UPDATE.getCode())
                 .routeRuleMap(serviceRuleMap)
                 .build();
-        WebsocketClientUtil.sendToAll(websocketBeanList, websocketMessageDTO);
+        WebsocketClientUtil.sendToAll(websocketMessageDTO);
         log.info("更新规则：{}", serviceRuleMap);
     }
 
@@ -72,13 +70,12 @@ public class RuleEventListener {
     @EventListener
     public void onDeleteRule(RuleDeleteEvent ruleDeleteEvent) {
         String routeName = ruleDeleteEvent.getRouteName();
-        List<String> websocketBeanList = CoreService.getWebsocketBeanList();
         WebsocketMessageDTO websocketMessageDTO = WebsocketMessageDTO.builder()
                 .eventType(EventTypeEnum.RULE.getName())
                 .actionType(ActionTypeEnum.REMOVE.getCode())
                 .detail(routeName)
                 .build();
-        WebsocketClientUtil.sendToAll(websocketBeanList, websocketMessageDTO);
+        WebsocketClientUtil.sendToAll(websocketMessageDTO);
         log.info("删除规则：{}", routeName);
     }
 }

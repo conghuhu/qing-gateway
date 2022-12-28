@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -64,13 +64,12 @@ public class ServiceEventListener {
     @EventListener
     public void onAdd(ServiceAddEvent serviceAddEvent) {
         Map<String, List<ServiceInstance>> serviceMap = serviceAddEvent.getServiceMap();
-        List<String> websocketBeanList = CoreService.getWebsocketBeanList();
         WebsocketMessageDTO websocketMessageDTO = WebsocketMessageDTO.builder()
                 .eventType(EventTypeEnum.SERVICE.getName())
                 .actionType(ActionTypeEnum.ADD.getCode())
                 .serviceMap(serviceMap)
                 .build();
-        WebsocketClientUtil.sendToAll(websocketBeanList, websocketMessageDTO);
+        WebsocketClientUtil.sendToAll(websocketMessageDTO);
         log.info("添加服务：{}", serviceMap);
         // 记录服务和实例，后续增量更新
         serviceCacheMap.putAll(serviceMap);
@@ -86,13 +85,12 @@ public class ServiceEventListener {
         if (incrementServiceMap.isEmpty()) {
             return;
         }
-        List<String> websocketBeanList = CoreService.getWebsocketBeanList();
         WebsocketMessageDTO websocketMessageDTO = WebsocketMessageDTO.builder()
                 .eventType(EventTypeEnum.SERVICE.getName())
                 .actionType(ActionTypeEnum.UPDATE.getCode())
                 .serviceMap(incrementServiceMap)
                 .build();
-        WebsocketClientUtil.sendToAll(websocketBeanList, websocketMessageDTO);
+        WebsocketClientUtil.sendToAll(websocketMessageDTO);
         serviceCacheMap.putAll(incrementServiceMap);
         persistServiceAndInstance(incrementServiceMap);
     }
@@ -107,13 +105,12 @@ public class ServiceEventListener {
                 serviceCacheMap.remove(serviceName);
             }
         }
-        List<String> websocketBeanList = CoreService.getWebsocketBeanList();
         WebsocketMessageDTO websocketMessageDTO = WebsocketMessageDTO.builder()
                 .eventType(EventTypeEnum.SERVICE.getName())
                 .actionType(ActionTypeEnum.REMOVE.getCode())
                 .onlineServices(onlineServices)
                 .build();
-        WebsocketClientUtil.sendToAll(websocketBeanList, websocketMessageDTO);
+        WebsocketClientUtil.sendToAll(websocketMessageDTO);
     }
 
     @EventListener

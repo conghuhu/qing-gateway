@@ -16,7 +16,6 @@
 package cn.qing.admin.starter;
 
 import cn.qing.admin.entity.QNacosInfo;
-import cn.qing.admin.entity.QWebsocketInfo;
 import cn.qing.admin.event.ruleEvent.RuleAddEvent;
 import cn.qing.admin.pojo.params.InitParam;
 import cn.qing.admin.pojo.vo.RouteRuleVo;
@@ -34,7 +33,6 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author conghuhu
@@ -75,8 +73,8 @@ public class SystemInitStarter {
         if (nacosInfo != null) {
             log.info("历史数据检测到Nacos配置，开始根据历史数据初始化...");
             initParam.setNacosServerAddr(nacosInfo.getAddress());
-            List<QWebsocketInfo> websocketInfoList = websocketInfoService.getWebsocketInfo();
-            initParam.setWebsocketUriList(websocketInfoList.stream().map(QWebsocketInfo::getUri).collect(Collectors.toList()));
+//            List<QWebsocketInfo> websocketInfoList = websocketInfoService.getWebsocketInfo();
+//            initParam.setWebsocketUriList(websocketInfoList.stream().map(QWebsocketInfo::getUri).collect(Collectors.toList()));
             coreService.init(initParam);
             // 路由初始化
             initRouteRule();

@@ -15,12 +15,11 @@
  */
 package cn.qing.server.cache;
 
-
 import cn.qing.common.enums.ActionTypeEnum;
 import cn.qing.common.enums.EventTypeEnum;
 import cn.qing.common.dto.LogDTO;
 import cn.qing.common.dto.WebsocketMessageDTO;
-import cn.qing.server.sync.DataSyncTaskStarter;
+import cn.qing.server.sync.WebsocketDataSyncClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -40,14 +39,14 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class LogCache {
 
-    private static final LinkedBlockingDeque<LogDTO> LINKED_BLOCKING_DEQUE = new LinkedBlockingDeque();
+    private static final LinkedBlockingDeque<LogDTO> LINKED_BLOCKING_DEQUE = new LinkedBlockingDeque<>();
 
-    private final DataSyncTaskStarter dataSyncTaskStarter;
+    private final WebsocketDataSyncClient websocketDataSyncClient;
 
     private final ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
 
-    public LogCache(DataSyncTaskStarter dataSyncTaskStarter, ScheduledThreadPoolExecutor scheduledThreadPoolExecutor) {
-        this.dataSyncTaskStarter = dataSyncTaskStarter;
+    public LogCache(WebsocketDataSyncClient websocketDataSyncClient, ScheduledThreadPoolExecutor scheduledThreadPoolExecutor) {
+        this.websocketDataSyncClient = websocketDataSyncClient;
         this.scheduledThreadPoolExecutor = scheduledThreadPoolExecutor;
     }
 
@@ -68,8 +67,8 @@ public class LogCache {
                     .actionType(ActionTypeEnum.ADD.getCode())
                     .logDTOList(logContentList)
                     .build();
-            dataSyncTaskStarter.sendMessage(messageDTO);
-        }, 100, 2000, TimeUnit.MILLISECONDS);
+            websocketDataSyncClient.sendMessage(messageDTO);
+        }, 0, 2000, TimeUnit.MILLISECONDS);
         log.info("初始化日志缓存池");
     }
 

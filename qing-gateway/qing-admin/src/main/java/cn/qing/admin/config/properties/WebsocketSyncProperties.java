@@ -1,53 +1,52 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.qing.admin.service;
+package cn.qing.admin.config.properties;
 
-import cn.qing.admin.entity.QWebsocketInfo;
-import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * <p>
- *  服务类
- * </p>
+ * the websocket sync strategy properties.
  *
  * @author conghuhu
- * @since 2022-04-08
+ * @create 2022/12/28 9:03
  */
-public interface QWebsocketInfoService extends IService<QWebsocketInfo> {
+@Data
+@ConfigurationProperties(prefix = "qing.sync.websocket")
+@Configuration
+public class WebsocketSyncProperties {
 
     /**
-     * 插入websocket信息
-     * @param websocketInfo
+     * default: true.
      */
-    void insert(QWebsocketInfo websocketInfo);
+    private boolean enabled = true;
 
     /**
-     * 查询所有websocket信息
-     * @return
+     * default: 9099
      */
-    List<QWebsocketInfo> getWebsocketInfo();
+    private int port = 9099;
 
     /**
-     * 清空表
+     * default is 8192.
      */
-    void clean();
+    private int messageMaxSize;
 
-    Boolean changeWebsocketStatus(String clientId, Boolean status);
-
-    List<QWebsocketInfo> getAll();
+    /**
+     * allowOrigins.
+     */
+    private String allowOrigins;
 }
