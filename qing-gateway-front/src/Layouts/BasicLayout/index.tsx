@@ -1,11 +1,12 @@
 import { createElement, Dispatch, SetStateAction, useEffect, useState } from 'react';
 import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
-import { useRequest } from 'ice';
-import { Link } from 'ice';
+import { useRequest, Link } from 'ice';
+
 import { asideMenuConfig } from './menuConfig';
-import { queryInitStatus, init } from '@/api/GlobalService'
+import { queryInitStatus, init } from '@/api/GlobalService';
 import { Modal, Button, Form, Input, Select, InputNumber } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+
 const loopMenuItem = (menus) =>
   menus.map(({ icon, children, ...item }) => ({
     ...item,
@@ -13,24 +14,25 @@ const loopMenuItem = (menus) =>
     children: children && loopMenuItem(children),
   }));
 const InitForm = ({
-  setIsModalVisible
+  setIsModalVisible,
 }:
-  {
-    setIsModalVisible: Dispatch<SetStateAction<boolean>>
-  }) => {
-  const [form] = Form.useForm()
-  const { loading, request: initSend } = useRequest(init)
+{
+  setIsModalVisible: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const [form] = Form.useForm();
+  const { loading, request: initSend } = useRequest(init);
   return (
-    <Modal title="系统初始化"
-      visible={true}
+    <Modal
+      title="系统初始化"
+      visible
       onOk={async () => {
         form.validateFields().then(async (values) => {
           const data = {
-            nacosServerAddr: values.IP + ":" + values.PORT,
-            websocketUriList: values.websocketUriList.map(item => "ws://" + item)
-          }
-          await initSend(data)
-          setIsModalVisible(false)
+            nacosServerAddr: `${values.IP}:${values.PORT}`,
+            websocketUriList: values.websocketUriList.map((item) => `ws://${item}`),
+          };
+          await initSend(data);
+          setIsModalVisible(false);
         });
       }}
       onCancel={() => setIsModalVisible(false)}
@@ -39,12 +41,15 @@ const InitForm = ({
       maskClosable={false}
     >
       <Form layout="vertical" labelAlign="right" form={form}>
-        <Form.Item label="输入nacos地址" name="IP"
-          rules={[{ required: true, message: '请输入有效IP!', pattern: /^(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.((1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.){2}(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)$/ }]}>
-          <Input addonBefore="IP:"></Input>
+        <Form.Item
+          label="输入nacos地址"
+          name="IP"
+          rules={[{ required: true, message: '请输入有效IP!', pattern: /^(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.((1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.){2}(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)$/ }]}
+        >
+          <Input addonBefore="IP:" />
         </Form.Item>
         <Form.Item name="PORT" rules={[{ required: true, message: '请输入PORT!' }]}>
-          <InputNumber addonBefore="PORT:" min={0} max={65535} style={{ width: "100%" }}></InputNumber>
+          <InputNumber addonBefore="PORT:" min={0} max={65535} style={{ width: '100%' }} />
         </Form.Item>
         <Form.List
           name="websocketUriList"
@@ -73,7 +78,7 @@ const InitForm = ({
                       {
                         required: true,
                         whitespace: true,
-                        message: "输入ws地址",
+                        message: '输入ws地址',
                       },
                     ]}
                     noStyle
@@ -83,7 +88,7 @@ const InitForm = ({
                   {fields.length > 1 ? (
                     <MinusCircleOutlined
                       className="dynamic-delete-button"
-                      style={{ "marginLeft": "0.5rem" }}
+                      style={{ marginLeft: '0.5rem' }}
                       onClick={() => remove(field.name)}
                     />
                   ) : null}
@@ -105,23 +110,23 @@ const InitForm = ({
         </Form.List>
       </Form>
     </Modal>
-  )
-}
+  );
+};
 
 export default function BasicLayout({ children, location }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { request: getStatus } = useRequest(queryInitStatus, {
     onSuccess: (data) => {
       console.log(data);
-      setIsModalVisible(!data.status)
+      setIsModalVisible(!data.status);
     },
-  })
-  const token = localStorage.getItem("token")
+  });
+  const token = localStorage.getItem('token');
   useEffect(() => {
     (async () => {
-      await getStatus()
-    })()
-  }, [])
+      await getStatus();
+    })();
+  }, []);
   return token && (
     <ProLayout
       title="Qing 网关"
@@ -156,7 +161,7 @@ export default function BasicLayout({ children, location }) {
         />
       )}
     >
-      {isModalVisible && <InitForm setIsModalVisible={setIsModalVisible}></InitForm>}
+      {isModalVisible && <InitForm setIsModalVisible={setIsModalVisible} />}
       <div style={{ minHeight: '60vh' }}>{children}</div>
     </ProLayout>
   );
