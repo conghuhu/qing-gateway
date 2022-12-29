@@ -20,6 +20,7 @@ import cn.qing.common.dto.LimitRuleDTO;
 import cn.qing.server.cache.LimitRuleCache;
 import cn.qing.server.chain.QingPluginChain;
 import cn.qing.server.plugin.base.AbstractQingPlugin;
+import cn.qing.server.plugin.result.QingResult;
 import cn.qing.server.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -56,7 +57,6 @@ public class CurrentLimitingPlugin extends AbstractQingPlugin {
         ServerHttpRequest request = exchange.getRequest();
         String ipAddress = HttpUtil.getIpAddress(request);
         String path = request.getPath().value();
-        String errorResultJson = "{\"code\":\"500\",\"message\":\"访问过于频繁，请稍后再试\"}";
         if (LimitRuleCache.getLimitRuleMap().containsKey(ipAddress)) {
             // 先对ip进行限流
             Flux<Long> acquire = getAcquire(ipAddress);
@@ -64,7 +64,7 @@ public class CurrentLimitingPlugin extends AbstractQingPlugin {
                 if (list.get(0) == 1) {
                     return chain.doChain(exchange);
                 } else {
-                    return QingResponseUtil.doResponse(exchange, errorResultJson);
+                    return QingResponseUtil.doResponse(exchange, QingResult.error("访问过于频繁，请稍后再试"));
                 }
             });
         } else if (LimitRuleCache.getLimitRuleMap().containsKey(path)) {
@@ -74,7 +74,7 @@ public class CurrentLimitingPlugin extends AbstractQingPlugin {
                 if (list.get(0) == 1) {
                     return chain.doChain(exchange);
                 } else {
-                    return QingResponseUtil.doResponse(exchange, errorResultJson);
+                    return QingResponseUtil.doResponse(exchange, QingResult.error("访问过于频繁，请稍后再试"));
                 }
             });
         }

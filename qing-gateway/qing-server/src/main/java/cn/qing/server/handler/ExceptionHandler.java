@@ -16,6 +16,7 @@
 package cn.qing.server.handler;
 
 import cn.qing.common.exception.QingException;
+import cn.qing.server.plugin.result.QingResult;
 import cn.qing.server.utils.QingResponseUtil;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -41,19 +42,17 @@ public class ExceptionHandler implements WebExceptionHandler {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.BAD_REQUEST);
         response.getHeaders().setContentType(MediaType.TEXT_PLAIN);
-        String errorResultJson = toStr(ex);
         ex.printStackTrace();
-        return QingResponseUtil.doResponse(exchange, errorResultJson);
+        return QingResponseUtil.doResponse(exchange, QingResult.error(toStr(ex)));
     }
 
     private String toStr(Throwable ex) {
         // 已知异常
         if (ex instanceof QingException) {
-            return "{\"code\":\"" + ((QingException) ex).getCode() + "\",\"message\":\"" + ((QingException) ex).getErrMsg() + "\"}";
+            return ((QingException) ex).getErrMsg();
         }
         // 未知异常
         else {
-            ex.printStackTrace();
             return ex.toString();
         }
     }
