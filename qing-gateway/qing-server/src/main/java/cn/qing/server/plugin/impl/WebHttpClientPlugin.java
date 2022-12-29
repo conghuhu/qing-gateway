@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 qing-gateway
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.qing.server.plugin.impl;
 
 import cn.qing.common.constants.CommonConstant;
@@ -7,7 +22,6 @@ import cn.qing.server.chain.QingPluginChain;
 import cn.qing.server.config.properties.ServerConfigProperties;
 import cn.qing.server.plugin.base.AbstractQingPlugin;
 import cn.qing.server.utils.SpringContextUtil;
-import cn.qing.server.utils.WebClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -51,7 +65,6 @@ public class WebHttpClientPlugin extends AbstractQingPlugin {
         if (Objects.isNull(url)) {
 
         }
-//        final long timeout = (long) Optional.ofNullable(exchange.getAttribute(CommonConstant.HTTP_TIME_OUT)).orElse(3000L);
         Long timeout = properties.getTimeOutMillis();
         final Duration duration = Duration.ofMillis(timeout);
         final HttpHeaders httpHeaders = buildHttpHeaders(exchange);

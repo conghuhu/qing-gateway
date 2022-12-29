@@ -28,10 +28,43 @@ qing:
     - uri: traffic
       predicates: /test
       priority: 100
-  web:
-    client:
-      pending-acquire-timeout: 25 # 超时时间 单位秒
-      pending-acquire-max-count: 10000 # 最大等待数
-      max-connections: 1000 # 最大连接数
-      max-idle-time: 30 # 最大空闲时间 单位秒
-      work-counts: 10 # 线程数
+  httpclient:
+    connectTimeout: 45000
+    responseTimeout: 3000
+    readerIdleTime: 3000
+    writerIdleTime: 3000
+    allIdleTime: 3000
+    readTimeout: 3000
+    writeTimeout: 3000
+    wiretap: true
+    keepAlive: false
+    maxInMemorySize: 1 #1mb
+    pool:
+      type: ELASTIC
+      name: proxy
+      maxConnections: 16
+      acquireTimeout: 45000
+      maxIdleTime: 3000
+    proxy:
+      host:
+      port:
+      username:
+      password:
+      nonProxyHostsPattern:
+    #    ssl:
+    #      useInsecureTrustManager: true
+    #      keyStoreType: PKCS12
+    #      keyStorePath: classpath:keystore.p12
+    #      keyStorePassword: 123456
+    #      keyStoreProvider:
+    #      keyPassword: 123456
+    #      trustedX509Certificates:
+    #      handshakeTimeout:
+    #      closeNotifyFlushTimeout:
+    #      closeNotifyReadTimeout:
+    #      defaultConfigurationType:
+    threadPool:
+      prefix: qing-gateway
+      selectCount: 1
+      workerCount: 8
+      daemon: true
