@@ -21,6 +21,8 @@ import cn.qing.common.enums.ResultEnum;
 import cn.qing.server.chain.QingPluginChain;
 import cn.qing.server.config.properties.ServerConfigProperties;
 import cn.qing.server.plugin.base.AbstractQingPlugin;
+import cn.qing.server.plugin.result.QingResult;
+import cn.qing.server.utils.QingResponseUtil;
 import cn.qing.server.utils.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -63,7 +65,7 @@ public class WebHttpClientPlugin extends AbstractQingPlugin {
     public Mono<Void> execute(ServerWebExchange exchange, QingPluginChain chain) {
         final String url = exchange.getAttribute(CommonConstant.HTTP_URI);
         if (Objects.isNull(url)) {
-
+            return QingResponseUtil.doResponse(exchange, QingResult.error("Can not find url, please check your configuration!"));
         }
         Long timeout = properties.getTimeOutMillis();
         final Duration duration = Duration.ofMillis(timeout);

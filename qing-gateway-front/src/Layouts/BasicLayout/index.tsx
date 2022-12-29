@@ -51,63 +51,6 @@ const InitForm = ({
         <Form.Item name="PORT" rules={[{ required: true, message: '请输入PORT!' }]}>
           <InputNumber addonBefore="PORT:" min={0} max={65535} style={{ width: '100%' }} />
         </Form.Item>
-        <Form.List
-          name="websocketUriList"
-          rules={[
-            {
-              validator: async (_, names) => {
-                if (!names || names.length < 1) {
-                  return Promise.reject(new Error('至少 1 个 ws'));
-                }
-              },
-            },
-          ]}
-        >
-          {(fields, { add, remove }, { errors }) => (
-            <>
-              {fields.map((field, index) => (
-                <Form.Item
-                  label={index === 0 ? '输入ws地址' : ''}
-                  required={false}
-                  key={field.key}
-                >
-                  <Form.Item
-                    {...field}
-                    validateTrigger={['onChange', 'onBlur']}
-                    rules={[
-                      {
-                        required: true,
-                        whitespace: true,
-                        message: '输入ws地址',
-                      },
-                    ]}
-                    noStyle
-                  >
-                    <Input placeholder="地址" style={{ width: '95%' }} addonBefore="ws://" />
-                  </Form.Item>
-                  {fields.length > 1 ? (
-                    <MinusCircleOutlined
-                      className="dynamic-delete-button"
-                      style={{ marginLeft: '0.5rem' }}
-                      onClick={() => remove(field.name)}
-                    />
-                  ) : null}
-                </Form.Item>
-              ))}
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  style={{ width: '100%' }}
-                  icon={<PlusOutlined />}
-                >
-                  添加ws地址，至少一项
-                </Button>
-                <Form.ErrorList errors={errors} />
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
       </Form>
     </Modal>
   );

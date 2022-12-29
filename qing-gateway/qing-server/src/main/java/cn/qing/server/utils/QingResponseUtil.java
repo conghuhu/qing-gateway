@@ -16,7 +16,8 @@
 package cn.qing.server.utils;
 
 import cn.qing.common.constants.CommonConstant;
-import cn.qing.common.utils.ObjectTypeUtils;
+import cn.qing.server.plugin.result.QingResult;
+import com.alibaba.fastjson.JSON;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -31,16 +32,14 @@ import java.util.Objects;
  * @create 2022-04-06 14:32
  */
 public class QingResponseUtil {
-    public static Mono<Void> doResponse(ServerWebExchange exchange, String resp) {
-        Assert.notNull(resp, "response object can't be null");
-        // basic data use text/plain
-        MediaType mediaType = MediaType.TEXT_PLAIN;
-        if (!ObjectTypeUtils.isBasicType(resp)) {
-            mediaType = getContentType(exchange);
-        }
+    public static <T> Mono<Void> doResponse(ServerWebExchange exchange, QingResult<T> res) {
+        Assert.notNull(res, "response object can't be null");
+
+        MediaType mediaType = getContentType(exchange);
+
         exchange.getResponse().getHeaders().setContentType(mediaType);
         return exchange.getResponse().writeWith(Mono.just(exchange.getResponse()
-                        .bufferFactory().wrap(resp.getBytes()))
+                        .bufferFactory().wrap(JSON.toJSONString(res).getBytes(StandardCharsets.UTF_8)))
                 .doOnNext(data -> exchange.getResponse().getHeaders().setContentLength(data.readableByteCount())));
     }
 
