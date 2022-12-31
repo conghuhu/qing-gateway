@@ -24,6 +24,7 @@ import cn.qing.server.plugin.base.QingPlugin;
 import cn.qing.server.plugin.impl.AuthPlugin;
 import cn.qing.server.plugin.impl.CurrentLimitingPlugin;
 import cn.qing.server.plugin.impl.DynamicRoutePlugin;
+import cn.qing.server.plugin.impl.GlobalPlugin;
 import cn.qing.server.plugin.impl.WebHttpClientPlugin;
 import cn.qing.server.utils.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
@@ -70,12 +71,13 @@ public class QingConfig {
         List<QingPlugin> qingPluginList = pluginList.stream()
                 .sorted(Comparator.comparingInt(QingPlugin::getOrder)).collect(Collectors.toList());
         QingWebHandler webHandler = new QingWebHandler(qingPluginList);
+        webHandler.addPlugin(new GlobalPlugin());
         webHandler.addPlugin(new AuthPlugin());
         webHandler.addPlugin(new CurrentLimitingPlugin(rateLimiter));
         webHandler.addPlugin(new DynamicRoutePlugin(serverConfigProperties));
         webHandler.addPlugin(new WebHttpClientPlugin(serverConfigProperties));
         webHandler.getPlugins().forEach(qingPlugin -> {
-            log.info("init plugin: {} {}", qingPlugin.getName(), qingPlugin.getClass().getName());
+            log.info("load plugin: {} {}", qingPlugin.getName(), qingPlugin.getClass().getName());
         });
         return webHandler;
     }

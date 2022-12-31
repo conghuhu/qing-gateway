@@ -61,68 +61,17 @@ public interface CommonConstant {
     String CLIENT_RESPONSE_RESULT_TYPE = "webHandlerClientResponseResultType";
 
     /**
-     * 通告对象类型（USER:指定用户，ALL:全体用户）
+     * The constant APP_KEY.
      */
-    public static final String MSG_TYPE_UESR = "USER";
-    public static final String MSG_TYPE_ALL = "ALL";
+    String APP_KEY = "appKey";
 
     /**
-     * 优先级（L低，M中，H高）
+     * The constant TIMESTAMP.
      */
-    public static final String PRIORITY_L = "L";
-    public static final String PRIORITY_M = "M";
-    public static final String PRIORITY_H = "H";
+    String TIMESTAMP = "timestamp";
 
     /**
-     * 短信模板方式  0 .登录模板、1.注册模板、2.忘记密码模板
+     * The constant context.
      */
-    public static final String SMS_TPL_TYPE_0 = "0";
-    public static final String SMS_TPL_TYPE_1 = "1";
-    public static final String SMS_TPL_TYPE_2 = "2";
-
-    /**
-     * 状态(0无效1有效)
-     */
-    public static final String STATUS_0 = "0";
-    public static final String STATUS_1 = "1";
-
-    /**
-     * 同步工作流引擎1同步0不同步
-     */
-    public static final Integer ACT_SYNC_1 = 1;
-    public static final Integer ACT_SYNC_0 = 0;
-
-    /**
-     * 文件上传类型（本地：local，Minio：minio，阿里云：alioss）
-     */
-    public static final String UPLOAD_TYPE_LOCAL = "local";
-    public static final String UPLOAD_TYPE_MINIO = "minio";
-    public static final String UPLOAD_TYPE_OSS = "alioss";
-
-    /**
-     * 文档上传自定义桶名称
-     */
-    public static final String UPLOAD_CUSTOM_BUCKET = "eoafile";
-    /**
-     * 文档上传自定义路径
-     */
-    public static final String UPLOAD_CUSTOM_PATH = "eoafile";
-    /**
-     * 文件外链接有效天数
-     */
-    public static final Integer UPLOAD_EFFECTIVE_DAYS = 1;
-
-    /**
-     * 公文文档上传自定义路径
-     */
-    public static final String UPLOAD_CUSTOM_PATH_OFFICIAL = "officialdoc";
-    /**
-     * 公文文档下载自定义路径
-     */
-    public static final String DOWNLOAD_CUSTOM_PATH_OFFICIAL = "officaldown";
-
-    /**
-     * 多租户 请求头
-     */
-    public final static String TENANT_ID = "tenant-id";
+    String CONTEXT = "context";
 }
