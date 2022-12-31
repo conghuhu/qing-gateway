@@ -42,6 +42,10 @@ public class PluginFilter implements WebFilter {
     @Override
     public Mono<Void> filter(@NonNull ServerWebExchange exchange, @NonNull WebFilterChain chain) {
         log.info("插件过滤器开始执行");
+        final String urlPath = exchange.getRequest().getURI().getPath();
+        if ("/actuator/prometheus".equals(urlPath)) {
+            return chain.filter(exchange);
+        }
         QpsCache.qps.getAndIncrement();
         return qingWebHandler.handle(exchange);
     }

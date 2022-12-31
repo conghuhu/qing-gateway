@@ -39,4 +39,17 @@ qing:
       port: 9099
       messageMaxSize: 8192
 
+# Prometheus springboot监控配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+
 # http://localhost:8080/swagger-ui/index.html
