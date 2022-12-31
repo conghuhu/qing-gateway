@@ -16,8 +16,10 @@
 package cn.qing.server.plugin.impl;
 
 import cn.qing.common.constants.CommonConstant;
+import cn.qing.common.enums.QingExceptionEnum;
 import cn.qing.common.enums.QingPluginEnum;
 import cn.qing.common.enums.ResultEnum;
+import cn.qing.common.exception.QingException;
 import cn.qing.server.chain.QingPluginChain;
 import cn.qing.server.config.properties.ServerConfigProperties;
 import cn.qing.server.plugin.base.AbstractQingPlugin;
@@ -75,6 +77,7 @@ public class WebHttpClientPlugin extends AbstractQingPlugin {
                 .doOnError(e -> log.error(e.getMessage(), e));
         // TODO 可加重试、降级策略
         return response
+                .onErrorMap(QingException.class, th -> new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, QingExceptionEnum.SERVICE_NOT_FIND.getMessage(), th))
                 .onErrorMap(TimeoutException.class, th -> new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, th.getMessage(), th))
                 .flatMap((Function<Object, Mono<? extends Void>>) o -> chain.doChain(exchange));
     }

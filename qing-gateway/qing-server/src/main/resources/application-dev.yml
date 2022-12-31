@@ -23,7 +23,6 @@ qing:
     load-balance: round_robin
     timeout-millis: 5000
     cache-refresh-interval-millis: 10000
-    websocket-port: 9999
   routes:
     - uri: traffic
       predicates: /test

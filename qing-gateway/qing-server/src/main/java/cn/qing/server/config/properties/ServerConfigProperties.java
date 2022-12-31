@@ -40,9 +40,4 @@ public class ServerConfigProperties {
      * 缓存刷新间隔，默认10s
      */
     private Long cacheRefreshIntervalMillis = 10000L;
-
-    /**
-     * websocket服务端口
-     */
-    private Integer webSocketPort;
 }

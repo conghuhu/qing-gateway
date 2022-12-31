@@ -20,6 +20,11 @@ package cn.qing.common.enums;
  * @create 2022-04-04 16:55
  */
 public enum QingPluginEnum {
+
+    /**
+     * 入口插件
+     */
+    GLOBAL("Global", 0, "入口插件"),
     /**
      * 鉴权插件
      */
