@@ -138,6 +138,9 @@ public class CoreService {
             } catch (NacosException e) {
                 e.printStackTrace();
                 throw new QingException("获取服务列表失败");
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                return new HashMap<>();
             }
         });
     }

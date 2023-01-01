@@ -1,5 +1,11 @@
-@import 'antd/dist/antd.css';
+/* @import 'antd/dist/antd.css'; */
+
+
+:root {
+  --primary: #3178f6;
+  --bg-primary: white;
+}
 
 body {
-  -webkit-font-smoothing: antialiased;
+  margin: 0;
 }

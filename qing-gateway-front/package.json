@@ -1,41 +1,28 @@
 {
-  "name": "qing-admin-front",
+  "name": "@ice/lite-scaffold",
   "version": "0.1.0",
-  "description": "高性能、响应式、分布式网关管理平台",
+  "description": "ice.js 3 lite 模板",
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
-    "@ant-design/pro-layout": "^6.34.10",
-    "antd": "^4.19.5",
-    "dayjs": "^1.11.0",
-    "echarts": "^5.3.2",
-    "echarts-for-react": "^3.0.2",
-    "moment": "^2.29.2",
-    "prop-types": "^15.5.8",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "@ant-design/icons": "^4.8.0",
+    "@ant-design/pro-layout": "^7.5.1",
+    "@ice/runtime": "^1.0.0",
+    "antd": "^5.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@iceworks/spec": "^1.6.0",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.2",
-    "build-plugin-antd": "^0.1.4",
-    "build-plugin-ignore-style": "^0.1.1",
-    "eslint": "^8.13.0",
-    "ice.js": "^2.6.5",
-    "stylelint": "^14.6.1"
+    "@ice/app": "^3.0.0",
+    "@ice/plugin-antd": "^1.0.0",
+    "@ice/plugin-request": "^1.0.0",
+    "@ice/plugin-store": "^1.0.1",
+    "@types/node": "^18.11.17",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
   },
   "scripts": {
-    "start": "icejs start --mode development",
-    "serve": "icejs start",
-    "build": "icejs build --mode production",
-    "lint": "npm run eslint && npm run stylelint",
-    "eslint": "eslint --cache --ext .js,.jsx ./",
-    "stylelint": "stylelint ./**/*.scss"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ice-lab/react-materials/tree/master/scaffolds/antd-lite"
+    "start": "ice start",
+    "build": "ice build"
   },
   "private": true,
-  "originTemplate": "@icedesign/ice-antd-scaffold"
+  "originTemplate": "@ice/lite-scaffold"
 }

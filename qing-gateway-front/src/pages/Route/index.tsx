@@ -2,12 +2,13 @@ import { Table, Popconfirm, Space, Button, Tooltip, Input, Tag, message, Modal, 
 import { PlusCircleOutlined } from '@ant-design/icons';
 import styles from './index.module.css';
 import { useRequest } from 'ice';
-const { Search } = Input;
 import { useEffect, useState } from 'react';
 import { RouteList } from '@/api/GlobalInterface';
-import { getRuleList, deleteRuleList } from '@/api/GlobalService';
+import { getRuleList, deleteRuleList } from '@/services/GlobalService';
 import AddRouterForm from '@/components/AddRouteForm';
 import EditRouteForm from '@/components/EditRouteForm';
+
+const { Search } = Input;
 
 export default function Route() {
   const [visible, setVisible] = useState(false);
@@ -127,3 +128,4 @@ export default function Route() {
     </div>
   );
 }
+

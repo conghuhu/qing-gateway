@@ -1,9 +1,10 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { getServiceList, getServiceInstanceList, updateInstance } from '@/api/GlobalService';
+import { getServiceList, getServiceInstanceList, updateInstance } from '@/services/GlobalService';
 import { useRequest } from 'ice';
 import { Button, Input, Modal, Space, Table, Typography, Popconfirm, Form, InputNumber } from 'antd';
 import styles from './index.module.css';
-import { ServiceInstanceItem, ServiceItem,updateIn } from '@/api/GlobalInterface';
+import { ServiceInstanceItem, ServiceItem, updateIn } from '@/api/GlobalInterface';
+
 const { Column } = Table;
 const { Search } = Input;
 
@@ -151,7 +152,7 @@ const ServiceInstanceModal = ({
         delete item.createdTime;
         delete item.id;
         delete item.serviceId;
-        await update({ ...item, ...row, serviceName: serviceName, clusterName: item.clustername });
+        await update({ ...item, ...row, serviceName, clusterName: item.clustername });
         await getServiceInstanceListRequest(serviceId);
         setEditingKey('');
       }
@@ -179,7 +180,7 @@ const ServiceInstanceModal = ({
     <Modal
       width={1000}
       title={`${serviceName}服务实例列表`}
-      visible={true}
+      open
       onCancel={() => setVisible(false)}
       footer={null}
     >
@@ -196,7 +197,7 @@ const ServiceInstanceModal = ({
               cell: EditableCell,
             },
           }}
-        ></Table>
+        />
       </Form>
     </Modal>
   );
@@ -262,7 +263,7 @@ export default function ServiceAndInstance() {
   return (
     <div>
       <div className={styles.headContainer}>
-        <Search placeholder="请输入服务名" onSearch={() => {}} style={{ width: 200 }} />
+        <Search placeholder="请输入服务名" onSearch={() => { }} style={{ width: 200 }} />
       </div>
       {visible && <ServiceInstanceModal serviceId={serviceId} serviceName={serviceName} setVisible={setVisible} />}
 
@@ -270,3 +271,4 @@ export default function ServiceAndInstance() {
     </div>
   );
 }
+

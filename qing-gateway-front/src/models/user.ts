@@ -1,23 +1,19 @@
-// src/models/user.ts
+import { createModel } from 'ice';
+import { UserInfo } from '@/api/GlobalInterface';
 
-export default {
-  // 定义 model 的初始 state
+interface ModelState {
+  currentUser: UserInfo;
+}
+
+export default createModel({
   state: {
-    username: 'conghuhu',
-    userId: '',
-  },
-
-  // 定义改变该模型状态的纯函数
+    currentUser: {},
+  } as ModelState,
   reducers: {
-    update(prevState, payload) {
-      return {
-        ...prevState,
-        ...payload,
-      };
+    updateCurrentUser(prevState: ModelState, payload) {
+      prevState.currentUser = payload;
     },
   },
-
-  // 定义处理该模型副作用的函数
   effects: (dispatch) => ({
     getUserInfo() {
       dispatch.user.update({
@@ -26,4 +22,4 @@ export default {
       });
     },
   }),
-};
+});

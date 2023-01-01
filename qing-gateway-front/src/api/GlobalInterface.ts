@@ -1,3 +1,10 @@
+export interface UserInfo {
+  username: string;
+  avatar: string;
+  userId: string;
+  userType: 'admin' | 'user';
+}
+
 export interface WebsocketInfoItem {
   beanName: string;
   createdTime: string;
@@ -101,7 +108,7 @@ export interface updateIn {
   protocol: string;
   serviceName: string;
   version: string;
-  weight: number
+  weight: number;
 }
 export interface Instance {
   clustername: string;
@@ -112,7 +119,7 @@ export interface Instance {
   protocol: string;
   serviceId: number;
   version: string;
-  weight: number
+  weight: number;
 }
 export interface MonitorInfo {
   gatewayId: string;
@@ -142,7 +149,6 @@ export interface jvmInfo {
 export interface Infoconfig {
   nacosInfo: nacosInfo;
   websocketInfoList: ws[];
-  timestamp: number;
 }
 export interface nacosInfo {
   id: number;
@@ -161,6 +167,6 @@ export interface ws {
   status: null | string;
 }
 export interface setData {
-  nacosServerAddr:string;
-  websocketUriList:any
+  nacosServerAddr: string;
+  websocketUriList: any;
 }

@@ -1,7 +1,7 @@
 import { Card, Col, Row, Badge, Popconfirm } from 'antd';
 import { useEffect } from 'react'
 import { useRequest } from 'ice'
-import { getLoadBalance, getCurrentLoadBalance, changeLoadBalance } from "@/api/GlobalService"
+import { getLoadBalance, getCurrentLoadBalance, changeLoadBalance } from "@/services/GlobalService"
 function LoadBalance() {
   const { data, loading, request: getBalance } = useRequest(getLoadBalance)
   const { data: select, request: selectBalance } = useRequest(getCurrentLoadBalance)

@@ -52,10 +52,6 @@
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.oshi</groupId>
-            <artifactId>oshi-core</artifactId>
-        </dependency>
-        <dependency>
             <groupId>cn.qing</groupId>
             <artifactId>qing-common</artifactId>
             <version>1.0.0</version>

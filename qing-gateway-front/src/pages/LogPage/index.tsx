@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getLogs } from '@/api/GlobalService';
+import { getLogs } from '@/services/GlobalService';
 import { useRequest } from 'ice';
 import { Input, Table } from 'antd';
 import styles from './index.module.css';
@@ -8,7 +8,7 @@ const { Column } = Table;
 const { Search } = Input;
 
 function LogPage() {
-  const { data, loading, request: getLogList } = useRequest(getLogs,{
+  const { data, loading, request: getLogList } = useRequest(getLogs, {
 
   });
   const params = {
@@ -21,14 +21,14 @@ function LogPage() {
       await getLogList(params);
     })();
   }, []);
-  const debounce = (fn,delay:number) => {
-    let timer:any = null;
+  const debounce = (fn, delay: number) => {
+    let timer: any = null;
     return (e) => {
-      if(timer) {
+      if (timer) {
         clearTimeout(timer)
       }
       timer = setTimeout(() => {
-        fn.call(this,e)
+        fn.call(this, e)
       }, delay);
     }
   }
@@ -45,7 +45,7 @@ function LogPage() {
             console.log(e)
             params.content = e.target.value;
             await getLogList(params);
-          },500)}
+          }, 500)}
           style={{ width: 200 }}
         />
       </div>

@@ -23,7 +23,6 @@
         <spring-boot.version>2.6.8</spring-boot.version>
         <nacos-client.version>2.2.0</nacos-client.version>
         <java-websocket.version>1.5.3</java-websocket.version>
-        <oshi.version>6.1.6</oshi.version>
         <mybatisplus.version>3.5.2</mybatisplus.version>
         <mybatisplus.generate.version>3.5.3</mybatisplus.generate.version>
         <freemarker.version>2.3.23</freemarker.version>
@@ -117,11 +116,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatisplus.generate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.oshi</groupId>
-                <artifactId>oshi-core</artifactId>
-                <version>${oshi.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

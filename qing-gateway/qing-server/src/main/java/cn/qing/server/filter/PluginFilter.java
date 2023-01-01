@@ -33,7 +33,6 @@ import reactor.core.publisher.Mono;
  * @create 2022-04-03 15:41
  */
 @Slf4j
-@Order(-90)
 public class PluginFilter implements WebFilter {
     @Autowired
     private QingWebHandler qingWebHandler;
@@ -41,11 +40,11 @@ public class PluginFilter implements WebFilter {
     @NonNull
     @Override
     public Mono<Void> filter(@NonNull ServerWebExchange exchange, @NonNull WebFilterChain chain) {
-        log.info("插件过滤器开始执行");
         final String urlPath = exchange.getRequest().getURI().getPath();
-        if ("/actuator/prometheus".equals(urlPath)) {
+        if (urlPath.contains("/actuator/prometheus")) {
             return chain.filter(exchange);
         }
+        log.info("插件过滤器开始执行");
         QpsCache.qps.getAndIncrement();
         return qingWebHandler.handle(exchange);
     }
