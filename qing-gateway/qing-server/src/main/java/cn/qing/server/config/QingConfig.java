@@ -25,8 +25,10 @@ import cn.qing.server.plugin.impl.AuthPlugin;
 import cn.qing.server.plugin.impl.CurrentLimitingPlugin;
 import cn.qing.server.plugin.impl.DynamicRoutePlugin;
 import cn.qing.server.plugin.impl.GlobalPlugin;
+import cn.qing.server.plugin.impl.MetricsPlugin;
 import cn.qing.server.plugin.impl.WebHttpClientPlugin;
 import cn.qing.server.utils.RateLimiter;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
@@ -49,12 +51,15 @@ public class QingConfig {
 
     private final RateLimiter rateLimiter;
 
+    private final MeterRegistry meterRegistry;
+
     public QingConfig(RouteConfigProperties routeConfigProperties,
                       ServerConfigProperties serverConfigProperties,
-                      RateLimiter rateLimiter) {
+                      RateLimiter rateLimiter, MeterRegistry meterRegistry) {
         this.routeConfigProperties = routeConfigProperties;
         this.serverConfigProperties = serverConfigProperties;
         this.rateLimiter = rateLimiter;
+        this.meterRegistry = meterRegistry;
     }
 
     /**
@@ -66,12 +71,12 @@ public class QingConfig {
     @Bean("qingWebHandler")
     public QingWebHandler qingWebHandler(final ObjectProvider<List<QingPlugin>> plugins) {
         log.info("init web handler");
-        log.info("服务配置：{}", serverConfigProperties);
         List<QingPlugin> pluginList = plugins.getIfAvailable(Collections::emptyList);
         List<QingPlugin> qingPluginList = pluginList.stream()
                 .sorted(Comparator.comparingInt(QingPlugin::getOrder)).collect(Collectors.toList());
         QingWebHandler webHandler = new QingWebHandler(qingPluginList);
         webHandler.addPlugin(new GlobalPlugin());
+        webHandler.addPlugin(new MetricsPlugin(meterRegistry));
         webHandler.addPlugin(new AuthPlugin());
         webHandler.addPlugin(new CurrentLimitingPlugin(rateLimiter));
         webHandler.addPlugin(new DynamicRoutePlugin(serverConfigProperties));

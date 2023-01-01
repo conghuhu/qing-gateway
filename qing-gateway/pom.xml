@@ -23,7 +23,6 @@
         <spring-boot.version>2.6.8</spring-boot.version>
         <nacos-client.version>2.2.0</nacos-client.version>
         <java-websocket.version>1.5.3</java-websocket.version>
-        <oshi.version>6.1.6</oshi.version>
         <mybatisplus.version>3.5.2</mybatisplus.version>
         <mybatisplus.generate.version>3.5.3</mybatisplus.generate.version>
         <freemarker.version>2.3.23</freemarker.version>
@@ -32,6 +31,8 @@
         <lombok.version>1.18.24</lombok.version>
         <jjwt.version>0.11.5</jjwt.version>
         <hamcrest.version>2.2</hamcrest.version>
+        <micrometer.version>1.10.2</micrometer.version>
+        <micrometer-tracing.version>1.0.0</micrometer-tracing.version>
         <!--maven plugin version-->
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
@@ -46,6 +47,20 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-bom</artifactId>
+                <version>${micrometer.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bom</artifactId>
+                <version>${micrometer-tracing.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -101,11 +116,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatisplus.generate.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.oshi</groupId>
-                <artifactId>oshi-core</artifactId>
-                <version>${oshi.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

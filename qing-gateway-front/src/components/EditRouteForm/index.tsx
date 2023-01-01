@@ -1,6 +1,6 @@
 import { Form, Input, InputNumber, message, Modal, Select, Switch } from 'antd';
 import { useRequest } from 'ice';
-import { getServiceList, updateRouteList } from '@/api/GlobalService';
+import { getServiceList, updateRouteList } from '@/services/GlobalService';
 import { SetStateAction, useEffect, Dispatch } from 'react';
 import { RouteList, RouteRuleItem } from '@/api/GlobalInterface';
 
@@ -32,7 +32,7 @@ const EditRouteForm = ({
   return (
     <Modal
       title="更改路由"
-      visible={true}
+      open
       okText="更改"
       cancelText="取消"
       onCancel={() => setEditVisible(false)}
@@ -77,3 +77,4 @@ const EditRouteForm = ({
   );
 };
 export default EditRouteForm;
+

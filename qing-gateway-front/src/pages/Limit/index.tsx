@@ -4,7 +4,7 @@ import { useRequest } from 'ice';
 const { Search } = Input;
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { LimitRule } from '@/api/GlobalInterface';
-import { deleteLimitRuleList, addLimitRuleList, getLimitRuleList, updateLimitRuleList } from '@/api/GlobalService';
+import { deleteLimitRuleList, addLimitRuleList, getLimitRuleList, updateLimitRuleList } from '@/services/GlobalService';
 import styles from './index.module.css'
 
 
@@ -36,7 +36,7 @@ const AddRouterForm = ({
   return (
     <Modal
       title="添加限流规则"
-      visible={true}
+      open
       okText="确认添加"
       cancelText="取消"
       onCancel={() => setVisible(false)}

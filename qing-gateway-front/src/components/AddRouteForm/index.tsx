@@ -1,6 +1,6 @@
-import { Form, Input, InputNumber, Select, Modal ,message} from 'antd';
+import { Form, Input, InputNumber, Select, Modal, message } from 'antd';
 import { useRequest } from 'ice';
-import { getServiceList, addRouteList } from '@/api/GlobalService';
+import { getServiceList, addRouteList } from '@/services/GlobalService';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { RouteList } from '@/api/GlobalInterface';
 const AddRouteForm = ({
@@ -15,7 +15,7 @@ const AddRouteForm = ({
       console.log(data[0]);
     },
   });
-  const { request: addRoute,loading } = useRequest(addRouteList, {
+  const { request: addRoute, loading } = useRequest(addRouteList, {
     manual: true,
     onSuccess: (data) => {
       message.success('添加成功');
@@ -46,7 +46,7 @@ const AddRouteForm = ({
   return (
     <Modal
       title="添加路由"
-      visible={true}
+      open
       okText="确认添加"
       cancelText="取消"
       onCancel={() => setVisible(false)}
