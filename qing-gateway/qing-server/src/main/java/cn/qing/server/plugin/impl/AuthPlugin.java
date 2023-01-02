@@ -28,6 +28,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 public class AuthPlugin extends AbstractQingPlugin {
+
     /**
      * 插件执行
      *
@@ -36,8 +37,7 @@ public class AuthPlugin extends AbstractQingPlugin {
      * @return
      */
     @Override
-    public Mono<Void> execute(ServerWebExchange exchange, QingPluginChain chain) {
-        log.info("auth plugin execute");
+    public Mono<Void> doExecute(ServerWebExchange exchange, QingPluginChain chain) {
         return chain.doChain(exchange);
     }
 
