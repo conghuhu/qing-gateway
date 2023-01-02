@@ -15,7 +15,10 @@
  */
 package cn.qing.server.plugin.base;
 
+import cn.qing.server.chain.QingPluginChain;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 /**
  * @author conghuhu
@@ -24,4 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractQingPlugin implements QingPlugin {
 
+    @Override
+    public Mono<Void> execute(ServerWebExchange exchange, QingPluginChain chain) {
+        log.info("{} plugin execute", getName());
+        return doExecute(exchange, chain);
+    }
+
+    protected abstract Mono<Void> doExecute(ServerWebExchange exchange, QingPluginChain chain);
 }

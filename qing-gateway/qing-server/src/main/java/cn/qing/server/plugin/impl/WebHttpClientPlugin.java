@@ -64,7 +64,7 @@ public class WebHttpClientPlugin extends AbstractQingPlugin {
     }
 
     @Override
-    public Mono<Void> execute(ServerWebExchange exchange, QingPluginChain chain) {
+    public Mono<Void> doExecute(ServerWebExchange exchange, QingPluginChain chain) {
         final String url = exchange.getAttribute(CommonConstant.HTTP_URI);
         if (Objects.isNull(url)) {
             return QingResponseUtil.doResponse(exchange, QingResult.error("Can not find url, please check your configuration!"));

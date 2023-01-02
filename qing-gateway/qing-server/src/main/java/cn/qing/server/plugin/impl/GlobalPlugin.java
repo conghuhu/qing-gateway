@@ -31,7 +31,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class GlobalPlugin extends AbstractQingPlugin {
     @Override
-    public Mono<Void> execute(ServerWebExchange exchange, QingPluginChain chain) {
+    public Mono<Void> doExecute(ServerWebExchange exchange, QingPluginChain chain) {
         QingContext context = QingContext.build(exchange.getRequest());
         exchange.getAttributes().put(CommonConstant.CONTEXT, context);
         return chain.doChain(exchange);

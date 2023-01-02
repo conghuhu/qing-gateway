@@ -52,8 +52,7 @@ public class CurrentLimitingPlugin extends AbstractQingPlugin {
      * @return
      */
     @Override
-    public Mono<Void> execute(ServerWebExchange exchange, QingPluginChain chain) {
-        log.info("CurrentLimitingPlugin execute");
+    public Mono<Void> doExecute(ServerWebExchange exchange, QingPluginChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String ipAddress = HttpUtil.getIpAddress(request);
         String path = request.getPath().value();

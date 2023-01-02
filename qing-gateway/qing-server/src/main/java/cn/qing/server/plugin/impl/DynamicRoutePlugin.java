@@ -63,8 +63,7 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
      * @return
      */
     @Override
-    public Mono<Void> execute(ServerWebExchange exchange, QingPluginChain chain) {
-        log.info("动态路由分发插件 execute");
+    public Mono<Void> doExecute(ServerWebExchange exchange, QingPluginChain chain) {
         String serviceName = chain.serviceName();
         String routeName = chain.routeName();
         // 利用负载均衡算法选择服务实例

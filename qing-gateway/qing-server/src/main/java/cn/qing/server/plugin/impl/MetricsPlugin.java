@@ -55,7 +55,7 @@ public class MetricsPlugin extends AbstractQingPlugin {
     }
 
     @Override
-    public Mono<Void> execute(ServerWebExchange exchange, QingPluginChain chain) {
+    public Mono<Void> doExecute(ServerWebExchange exchange, QingPluginChain chain) {
         requestTotalCounter.increment();
         QingContext ctx = exchange.getAttribute(CommonConstant.CONTEXT);
         assert ctx != null;
