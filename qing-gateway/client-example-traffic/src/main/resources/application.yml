@@ -12,3 +12,6 @@ spring:
         metadata:
           version: 2.0
           protocol: http
+qing:
+  tracing:
+    endpoint_url: http://localhost:9411

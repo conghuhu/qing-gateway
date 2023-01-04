@@ -27,6 +27,8 @@ qing:
     - uri: traffic
       predicates: /test
       priority: 100
+  tracing:
+    endpoint_url: http://localhost:9411
   httpclient:
     connectTimeout: 45000
     responseTimeout: 3000
