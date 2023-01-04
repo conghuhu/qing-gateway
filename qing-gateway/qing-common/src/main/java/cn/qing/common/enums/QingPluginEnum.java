@@ -26,25 +26,29 @@ public enum QingPluginEnum {
      */
     GLOBAL("Global", 0, "入口插件"),
     /**
+     * tracing 插件
+     */
+    TRACING("Tracing", 1, "tracing 插件"),
+    /**
      * metrics插件
      */
-    METRICS("Metrics", 1, "metrics插件"),
+    METRICS("Metrics", 2, "metrics插件"),
     /**
      * 鉴权插件
      */
-    AUTH("Auth", 2, "鉴权插件"),
+    AUTH("Auth", 3, "鉴权插件"),
     /**
      * 限流插件
      */
-    CURRENT_LIMITING("CurrentLimiting", 3, "限流插件"),
+    CURRENT_LIMITING("CurrentLimiting", 4, "限流插件"),
     /**
      * 路由插件
      */
-    DYNAMIC_ROUTE("DynamicRoute", 4, "动态路由插件"),
+    DYNAMIC_ROUTE("DynamicRoute", 5, "动态路由插件"),
     /**
      * web client插件
      */
-    WEB_HTTP_CLIENT("WebHttpClient", 5, "http client插件");
+    WEB_HTTP_CLIENT("WebHttpClient", 6, "http client插件");
 
     private String name;
 

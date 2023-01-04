@@ -22,9 +22,11 @@ import cn.qing.server.cache.RouteRuleCache;
 import cn.qing.server.cache.ServiceCache;
 import cn.qing.server.chain.DefaultQingPluginChain;
 import cn.qing.server.plugin.base.QingPlugin;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.lang.NonNull;
@@ -90,7 +92,7 @@ public final class QingWebHandler implements WebHandler {
         ServerHttpRequest request = exchange.getRequest();
         String path;
         try {
-            log.info("原始path为：{}", request.getURI().getPath());
+            log.info("origin path is: {}", request.getURI().getPath());
             path = request.getURI().getPath();
         } catch (Exception e) {
             throw new QingException(QingExceptionEnum.PARAM_ERROR);

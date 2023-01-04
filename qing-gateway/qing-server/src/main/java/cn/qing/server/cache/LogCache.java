@@ -57,7 +57,7 @@ public class LogCache {
             if (size == 0) {
                 return;
             }
-            log.info("批量处理日志缓存池中日志：{}条", size);
+            log.debug("批量处理日志缓存池中日志：{}条", size);
             List<LogDTO> logContentList = new ArrayList<>();
             for (int i = 0; i < size; i++) {
                 logContentList.add(LINKED_BLOCKING_DEQUE.poll());
@@ -69,7 +69,7 @@ public class LogCache {
                     .build();
             websocketDataSyncClient.sendMessage(messageDTO);
         }, 0, 2000, TimeUnit.MILLISECONDS);
-        log.info("初始化日志缓存池");
+        log.info("init log cache pool");
     }
 
     /**

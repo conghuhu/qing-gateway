@@ -22,6 +22,7 @@ import cn.qing.admin.entity.QWebsocketInfo;
 import cn.qing.admin.service.CoreService;
 import cn.qing.admin.service.QLogService;
 import cn.qing.admin.service.QWebsocketInfoService;
+import cn.qing.admin.transfer.LogTransfer;
 import cn.qing.admin.util.SpringContextUtil;
 import cn.qing.common.dto.LogDTO;
 import cn.qing.common.dto.WebsocketMessageDTO;
@@ -50,13 +51,10 @@ import java.util.List;
 @Component
 public class WebsocketDataSyncServer extends WebSocketServer {
 
-    private final WebsocketSyncProperties properties;
-
     private final QWebsocketInfoService websocketInfoService;
 
     public WebsocketDataSyncServer(WebsocketSyncProperties properties, QWebsocketInfoService websocketInfoService) {
         super(new InetSocketAddress(properties.getPort()));
-        this.properties = properties;
         this.websocketInfoService = websocketInfoService;
         this.start();
     }
@@ -112,15 +110,8 @@ public class WebsocketDataSyncServer extends WebSocketServer {
             List<LogDTO> logDTOList = websocketMessageDTO.getLogDTOList();
             List<QLog> logList = new ArrayList<>();
             logDTOList.forEach(logDTO -> {
-                QLog log = new QLog();
-                log.setOriginIP(logDTO.getOriginIP());
-                log.setOriginuri(logDTO.getOriginURI());
-                log.setProxyuri(logDTO.getProxyURI());
-                log.setRouteName(logDTO.getRouteName());
-                log.setServiceInstance(logDTO.getServiceInstance().getIp() + ":" + logDTO.getServiceInstance().getPort());
-                log.setTargetService(logDTO.getTargetService());
-                log.setCreatedTime(logDTO.getCreatedTime());
-                logList.add(log);
+                QLog qlog = LogTransfer.transferToLog(logDTO);
+                logList.add(qlog);
             });
             logService.saveBatch(logList);
         }

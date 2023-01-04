@@ -21,6 +21,8 @@ package cn.qing.common.constants;
  */
 public interface CommonConstant {
 
+    String QING_GATEWAY = "qing-gateway";
+
     /**
      * {@code 500 Server Error} (HTTP/1.0 - RFC 1945)
      */
@@ -74,4 +76,8 @@ public interface CommonConstant {
      * The constant context.
      */
     String CONTEXT = "context";
+
+    String TRACE_ID = "qing-trace-id";
+
+    String QING_TRACE = "qing-trace";
 }

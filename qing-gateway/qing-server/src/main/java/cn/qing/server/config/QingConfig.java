@@ -26,6 +26,7 @@ import cn.qing.server.plugin.impl.CurrentLimitingPlugin;
 import cn.qing.server.plugin.impl.DynamicRoutePlugin;
 import cn.qing.server.plugin.impl.GlobalPlugin;
 import cn.qing.server.plugin.impl.MetricsPlugin;
+import cn.qing.server.plugin.impl.TracingPlugin;
 import cn.qing.server.plugin.impl.WebHttpClientPlugin;
 import cn.qing.server.utils.RateLimiter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -76,6 +77,7 @@ public class QingConfig {
                 .sorted(Comparator.comparingInt(QingPlugin::getOrder)).collect(Collectors.toList());
         QingWebHandler webHandler = new QingWebHandler(qingPluginList);
         webHandler.addPlugin(new GlobalPlugin());
+        webHandler.addPlugin(new TracingPlugin());
         webHandler.addPlugin(new MetricsPlugin(meterRegistry));
         webHandler.addPlugin(new AuthPlugin());
         webHandler.addPlugin(new CurrentLimitingPlugin(rateLimiter));
