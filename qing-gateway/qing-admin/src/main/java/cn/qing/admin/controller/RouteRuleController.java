@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,6 +25,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -53,21 +55,21 @@ public class RouteRuleController {
 
     @ApiOperation(value = "添加路由规则", notes = "添加路由规则")
     @PostMapping("/addRouteRule")
-    public Result<QRouteRule> addRouteRule(@RequestBody RouteRuleParam routeRuleParam) {
+    public Result<QRouteRule> addRouteRule(@Valid @RequestBody RouteRuleParam routeRuleParam) {
         QRouteRule routeRule = routeRuleService.addRouteRule(routeRuleParam);
         return Result.OK(routeRule);
     }
 
     @ApiOperation(value = "删除路由规则", notes = "删除路由规则")
     @DeleteMapping("/deleteRouteRule")
-    public Result<?> deleteRouteRule(@RequestParam("id") Long id) {
+    public Result<?> deleteRouteRule(@NotNull @RequestParam("id") Long id) {
         routeRuleService.deleteRouteRule(id);
         return Result.OK();
     }
 
     @ApiOperation(value = "更新路由规则", notes = "更新路由规则")
     @PutMapping("/updateRouteRule")
-    public Result<?> updateRouteRule(@RequestBody RouteRuleParam routeRuleParam) {
+    public Result<?> updateRouteRule(@Valid @RequestBody RouteRuleParam routeRuleParam) {
         routeRuleService.updateRouteRule(routeRuleParam);
         return Result.OK();
     }

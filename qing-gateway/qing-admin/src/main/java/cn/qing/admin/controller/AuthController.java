@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 qing-gateway
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,11 +22,14 @@ import cn.qing.admin.pojo.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * 鉴权
@@ -47,7 +50,7 @@ public class AuthController {
 
     @ApiOperation(value = "注册用户", notes = "注册用户")
     @PostMapping("/register")
-    public Result<?> register(@RequestBody RegisterParam registerParam) {
+    public Result<?> register(@Valid @RequestBody RegisterParam registerParam) {
         String token = userService.register(registerParam);
         if (StringUtils.hasLength(token)) {
             return Result.OK(token);
@@ -58,7 +61,7 @@ public class AuthController {
 
     @ApiOperation(value = "登录接口", notes = "登录接口")
     @PostMapping("/login")
-    public Result<?> login(@RequestBody RegisterParam registerParam) {
+    public Result<?> login(@Valid @RequestBody RegisterParam registerParam) {
         String token = userService.login(registerParam);
         if (StringUtils.hasLength(token)) {
             return Result.OK(token);

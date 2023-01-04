@@ -32,8 +32,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -44,6 +47,7 @@ import java.util.concurrent.ExecutionException;
 @Api(tags = "系统相关接口")
 @RestController
 @RequestMapping("/sys")
+@Validated
 public class SystemController {
 
     private final QWebsocketInfoService websocketInfoService;
@@ -66,7 +70,7 @@ public class SystemController {
      */
     @ApiOperation(value = "初始化系统参数", notes = "初始化系统参数")
     @PostMapping("/init")
-    public Result<?> init(@RequestBody InitParam initDTO) throws ExecutionException, InterruptedException {
+    public Result<?> init(@Valid @RequestBody InitParam initDTO) throws ExecutionException, InterruptedException {
         coreService.init(initDTO);
         return Result.OK();
     }
@@ -82,7 +86,7 @@ public class SystemController {
 
     @ApiOperation(value = "系统重置", notes = "系统重置")
     @PostMapping("/reset")
-    public Result<?> reset(@RequestBody InitParam initDTO) throws ExecutionException, InterruptedException {
+    public Result<?> reset(@Valid @RequestBody InitParam initDTO) throws ExecutionException, InterruptedException {
         coreService.reset(initDTO);
         return Result.OK();
     }
@@ -100,7 +104,7 @@ public class SystemController {
 
     @ApiOperation(value = "改变负载均衡策略", notes = "改变负载均衡策略")
     @PutMapping("/changeLoadBalance")
-    public Result<?> changeLoadBalance(@RequestParam("loadBalance") String loadBalance) {
+    public Result<?> changeLoadBalance(@NotBlank @RequestParam("loadBalance") String loadBalance) {
         coreService.changeLoadBalance(loadBalance);
         return Result.OK();
     }
@@ -121,7 +125,7 @@ public class SystemController {
 
     @ApiOperation(value = "获取调用行为日志", notes = "获取调用行为日志")
     @PostMapping("/getInvokeLogs")
-    public Result<PageResult<List<QLog>>> getInvokeLogs(@RequestBody PageParam pageParam) {
+    public Result<PageResult<List<QLog>>> getInvokeLogs(@Valid @RequestBody PageParam pageParam) {
         PageResult<List<QLog>> result = logService.getInvokeLogs(pageParam);
         return Result.OK(result);
     }
