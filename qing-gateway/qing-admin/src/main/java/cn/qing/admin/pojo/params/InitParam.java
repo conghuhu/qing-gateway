@@ -17,6 +17,7 @@ package cn.qing.admin.pojo.params;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class InitParam {
     /**
      * nacos配置中心地址
      */
+    @NotBlank
     private String nacosServerAddr;
 
 }
