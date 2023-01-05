@@ -4,9 +4,9 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/ci.yml'
-      - 'qing-gateway/**'
-      - 
+      - ".github/workflows/ci.yml"
+      - "qing-gateway/**"
+      -
   push:
     branches:
       - main
@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up JDK 18
+      - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
@@ -28,3 +28,8 @@ jobs:
         run: mvn -B test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
+        with:
+          files: ./cover.xml
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
