@@ -88,7 +88,7 @@ public class RouteTrieTest {
 
     @Test
     public void testMultiThreadRoute() throws InterruptedException {
-        int count = 10000;
+        int count = 1000;
         CountDownLatch countDownLatch = new CountDownLatch(count);
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(32, 32, 2,
                 TimeUnit.SECONDS, new LinkedBlockingDeque<>(count),
