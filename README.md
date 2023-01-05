@@ -1,5 +1,7 @@
 # qing-gateway
 
+[![codecov](https://codecov.io/gh/conghuhu/qing-gateway/branch/main/graph/badge.svg?token=P68V7B123U)](https://codecov.io/gh/conghuhu/qing-gateway)
+
 - 基于Webflux的网关服务，非阻塞IO
 
 - 微服务注册中心选用Nacos
