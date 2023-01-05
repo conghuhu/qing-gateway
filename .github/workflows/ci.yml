@@ -6,13 +6,18 @@ on:
     paths:
       - ".github/workflows/ci.yml"
       - "qing-gateway/**"
-      -
   push:
     branches:
       - main
+    paths:
+      - ".github/workflows/ci.yml"
+      - "qing-gateway/**"
 jobs:
   run:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./qing-gateway
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,15 +26,8 @@ jobs:
         with:
           java-version: 1.8
       - name: Install dependencies
-        working-directory: qing-gateway/
         run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       - name: Run tests and collect coverage
-        working-directory: qing-gateway/
         run: mvn -B test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
-        with:
-          files: ./cover.xml
-          flags: unittests # optional
-          name: codecov-umbrella # optional
-          fail_ci_if_error: true # optional (default = false)
