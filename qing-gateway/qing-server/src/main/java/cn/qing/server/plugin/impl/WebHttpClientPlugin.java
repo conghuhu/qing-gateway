@@ -41,7 +41,9 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -79,6 +81,7 @@ public class WebHttpClientPlugin extends AbstractQingPlugin {
         return response
                 .onErrorMap(QingException.class, th -> new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, QingExceptionEnum.SERVICE_NOT_FIND.getMessage(), th))
                 .onErrorMap(TimeoutException.class, th -> new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, th.getMessage(), th))
+                .flatMap(res -> exchange.getResponse().writeWith(res.bodyToMono(DataBuffer.class)))
                 .flatMap((Function<Object, Mono<? extends Void>>) o -> chain.doChain(exchange));
     }
 
