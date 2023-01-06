@@ -19,6 +19,7 @@ import cn.qing.common.constants.CommonConstant;
 import cn.qing.common.enums.QingPluginEnum;
 import cn.qing.server.chain.QingPluginChain;
 import cn.qing.server.plugin.base.AbstractQingPlugin;
+import cn.qing.server.utils.MDCUtil;
 import cn.qing.server.utils.SpringContextUtil;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
@@ -47,8 +48,8 @@ public class TracingPlugin extends AbstractQingPlugin {
         if (log.isDebugEnabled()) {
             log.debug("span observe start, traceId:{} spanId:{}", span.context().traceId(), span.context().spanId());
         }
-
         try (Tracer.SpanInScope ignored = tracer.withSpan(span.start())) {
+            MDCUtil.setTraceId(span.context().traceId(), span.context().spanId());
             exchange.getAttributes().put(CommonConstant.TRACE_ID, span.context().traceId());
             exchange.getResponse().getHeaders().add(CommonConstant.TRACE_ID, span.context().traceId());
             inject(exchange, tracer);
@@ -63,6 +64,7 @@ public class TracingPlugin extends AbstractQingPlugin {
                 }
                 span.event("Proxy End");
                 span.end();
+                MDCUtil.remove();
             });
         }
     }

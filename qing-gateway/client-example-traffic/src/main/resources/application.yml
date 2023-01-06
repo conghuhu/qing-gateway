@@ -7,7 +7,7 @@ spring:
     nacos:
       server-addr: 124.222.60.243:8848
       discovery:
-#        ip: 124.222.224.173
+        #        ip: 124.222.224.173
         group: QING_GROUP
         metadata:
           version: 2.0
@@ -15,3 +15,7 @@ spring:
 qing:
   tracing:
     endpoint_url: http://localhost:9411
+
+logging:
+  pattern:
+    level: trace_id=%mdc{trace_id} span_id=%mdc{span_id} %5p

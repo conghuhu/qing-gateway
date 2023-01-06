@@ -14,6 +14,8 @@ server:
 logging:
   level:
     cn.qing.server: debug
+  pattern:
+    level: trace_id=%mdc{trace_id} span_id=%mdc{span_id} %5p
 
 qing:
   admin:
