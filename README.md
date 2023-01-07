@@ -1,4 +1,4 @@
-# qing-gateway
+# Qing-Gateway
 
 [![codecov](https://codecov.io/gh/conghuhu/qing-gateway/branch/main/graph/badge.svg?token=P68V7B123U)](https://codecov.io/gh/conghuhu/qing-gateway)
 
@@ -96,4 +96,14 @@
 
 ### 可观测性
 
+Metrics基于Prometheus+Grafana，在qing-server和qing-admin通过Micrometer采集metrics，然后以http server暴露到启动端口上。
+
 ![Grafana](./asset/%E7%9B%91%E6%8E%A7metrics.png)
+
+Tracing基于Micrometer进行traceId、spanId的生成，通过bridge转换标准的Otel，上报到zipkin中。
+
+![Zipkin](./docs/dev/images/zipkin.png)
+
+## 六、贡献
+
+感谢你有兴趣为本项目做贡献，请阅读[贡献规则](CONTRIBUTING.md)和[开发文档](./docs/dev/development.md)来获取更多信息
