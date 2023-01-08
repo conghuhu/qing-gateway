@@ -15,13 +15,16 @@
  */
 package cn.qing.server.utils;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * http工具类，获取真实的ip地址
@@ -92,5 +95,11 @@ public class HttpUtil {
      */
     public static Integer getPort(ServerHttpRequest request) {
         return request.getRemoteAddress().getPort();
+    }
+
+    public static String getHeaders(final HttpHeaders headers) {
+        Map<String, String> map = headers.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> String.join(",", entry.getValue())));
+        return JSON.toJSONString(map);
     }
 }

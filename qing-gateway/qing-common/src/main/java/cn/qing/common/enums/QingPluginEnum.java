@@ -46,9 +46,13 @@ public enum QingPluginEnum {
      */
     DYNAMIC_ROUTE("DynamicRoute", 5, "动态路由插件"),
     /**
+     * 日志埋点插件
+     */
+    LOGGING("Logging", 6, "日志埋点插件"),
+    /**
      * web client插件
      */
-    WEB_HTTP_CLIENT("WebHttpClient", 6, "http client插件");
+    WEB_HTTP_CLIENT("WebHttpClient", 7, "http client插件");
 
     private String name;
 

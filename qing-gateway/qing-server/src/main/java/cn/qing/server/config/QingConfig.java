@@ -16,6 +16,7 @@
 package cn.qing.server.config;
 
 import cn.qing.common.dto.ServiceRuleDTO;
+import cn.qing.server.cache.LogCache;
 import cn.qing.server.cache.RouteRuleCache;
 import cn.qing.server.config.properties.RouteConfigProperties;
 import cn.qing.server.config.properties.ServerConfigProperties;
@@ -25,6 +26,7 @@ import cn.qing.server.plugin.impl.AuthPlugin;
 import cn.qing.server.plugin.impl.CurrentLimitingPlugin;
 import cn.qing.server.plugin.impl.DynamicRoutePlugin;
 import cn.qing.server.plugin.impl.GlobalPlugin;
+import cn.qing.server.plugin.impl.LoggingPlugin;
 import cn.qing.server.plugin.impl.MetricsPlugin;
 import cn.qing.server.plugin.impl.TracingPlugin;
 import cn.qing.server.plugin.impl.WebHttpClientPlugin;
@@ -54,13 +56,16 @@ public class QingConfig {
 
     private final MeterRegistry meterRegistry;
 
+    private final LogCache logCache;
+
     public QingConfig(RouteConfigProperties routeConfigProperties,
                       ServerConfigProperties serverConfigProperties,
-                      RateLimiter rateLimiter, MeterRegistry meterRegistry) {
+                      RateLimiter rateLimiter, MeterRegistry meterRegistry, LogCache logCache) {
         this.routeConfigProperties = routeConfigProperties;
         this.serverConfigProperties = serverConfigProperties;
         this.rateLimiter = rateLimiter;
         this.meterRegistry = meterRegistry;
+        this.logCache = logCache;
     }
 
     /**
@@ -82,6 +87,7 @@ public class QingConfig {
         webHandler.addPlugin(new AuthPlugin());
         webHandler.addPlugin(new CurrentLimitingPlugin(rateLimiter));
         webHandler.addPlugin(new DynamicRoutePlugin(serverConfigProperties));
+        webHandler.addPlugin(new LoggingPlugin(logCache));
         webHandler.addPlugin(new WebHttpClientPlugin(serverConfigProperties));
         webHandler.getPlugins().forEach(qingPlugin -> {
             log.info("load plugin: {} {}", qingPlugin.getName(), qingPlugin.getClass().getName());
