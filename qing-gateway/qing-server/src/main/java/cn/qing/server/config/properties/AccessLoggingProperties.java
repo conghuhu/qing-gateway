@@ -19,35 +19,39 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author conghuhu
- * @create 2022/12/27 22:23
+ * @create 2023/1/8 10:21
  */
 @Data
-@ConfigurationProperties(prefix = "qing.admin")
+@ConfigurationProperties(prefix = "qing.logging")
 @Configuration
-public class AdminConfigProperties {
+public class AccessLoggingProperties {
+
+    private String strategy = "admin";
+
+    private String topic = "qing-access-logging";
+
+    private String nameserverAddr;
 
     /**
-     * 控制面的连接信息
+     * 压缩算法，默认不压缩，目前支持LZ4压缩
      */
-    private List<AdminInfo> infos;
+    private String compressAlg;
 
-    public static class AdminInfo {
-        String url;
+    /**
+     * default 512KB.
+     */
+    private int maxResponseBody = 524288;
 
-        public AdminInfo() {
-        }
+    /**
+     * default 512kb.
+     */
+    private int maxRequestBody = 524288;
 
-        public String getUrl() {
-            return url;
-        }
+    /**
+     * default 50000.
+     */
+    private int bufferQueueSize = 50000;
 
-        public void setUrl(String url) {
-            this.url = url;
-        }
-    }
 }

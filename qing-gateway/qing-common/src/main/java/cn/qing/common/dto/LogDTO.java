@@ -31,20 +31,61 @@ public class LogDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * http method
+     */
+    private String method;
+
+    private String requestHeader;
+
+    private String queryParams;
+
+    /**
+     * 源IP
+     */
     private String originIP;
 
+    /**
+     * 源URI
+     */
     private String originURI;
 
+    /**
+     * 目标路由服务
+     */
     private String targetService;
 
+    /**
+     * 具体服务实例
+     */
     private ServiceInstance serviceInstance;
 
+    /**
+     * 路由
+     */
     private String routeName;
 
+    /**
+     * 代理URI
+     */
     private String proxyURI;
 
+    /**
+     * traceId
+     */
     private String traceId;
 
+    private String userAgent;
+
+    private Integer status;
+
+    private String responseBody;
+
+    private Integer contentLength;
+
+    /**
+     * 创建时间
+     */
     private LocalDateTime createdTime;
 
 }

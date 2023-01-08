@@ -31,6 +31,10 @@ qing:
       priority: 100
   tracing:
     endpoint_url: http://localhost:9411
+  logging:
+    strategy: kafka
+    topic: qing-access-logging
+    nameserverAddr: 47.113.189.237:29092
   httpclient:
     connectTimeout: 45000
     responseTimeout: 3000

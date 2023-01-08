@@ -48,6 +48,11 @@ public interface CommonConstant {
     String HTTP_URI = "httpUri";
 
     /**
+     * The constant HTTP_URI.
+     */
+    String SERVICE_INSTANCE = "service-instance";
+
+    /**
      * The constant CLIENT_RESPONSE_ATTR.
      */
     String CLIENT_RESPONSE_ATTR = "webHandlerClientResponse";

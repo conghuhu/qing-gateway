@@ -17,7 +17,6 @@ package cn.qing.server.plugin.impl;
 
 import cn.qing.common.constants.CommonConstant;
 import cn.qing.common.constants.ProtocolConstantMap;
-import cn.qing.common.dto.LogDTO;
 import cn.qing.common.dto.ServiceInstance;
 import cn.qing.common.enums.QingExceptionEnum;
 import cn.qing.common.enums.QingPluginEnum;
@@ -26,11 +25,8 @@ import cn.qing.server.cache.ServiceCache;
 import cn.qing.server.chain.QingPluginChain;
 import cn.qing.server.config.properties.ServerConfigProperties;
 import cn.qing.server.factory.LoadBalanceFactory;
-import cn.qing.server.handler.MultithreadingTaskHandler;
 import cn.qing.server.plugin.base.AbstractQingPlugin;
 import cn.qing.server.spi.LoadBalance;
-import cn.qing.server.utils.HttpUtil;
-import cn.qing.server.utils.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.CollectionUtils;
@@ -38,8 +34,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,7 +67,7 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
         String url = getTargetUrl(exchange, serviceInstance, routeName);
         log.info("服务[{}]对应的服务实例[{}]，转发目标url[{}]", serviceName, serviceInstance, url);
         exchange.getAttributes().put(CommonConstant.HTTP_URI, url);
-        recordLog(exchange, serviceName, routeName, serviceInstance, url);
+        exchange.getAttributes().put(CommonConstant.SERVICE_INSTANCE, serviceInstance);
         return chain.doChain(exchange);
     }
 
@@ -133,30 +127,6 @@ public class DynamicRoutePlugin extends AbstractQingPlugin {
             url += "?" + query;
         }
         return url;
-    }
-
-    /**
-     * 记录log至本地缓存
-     *
-     * @param exchange
-     * @param serviceName
-     * @param routeName
-     * @param serviceInstance
-     * @param url
-     */
-    private void recordLog(ServerWebExchange exchange, String serviceName,
-                           String routeName, ServiceInstance serviceInstance, String url) {
-        MultithreadingTaskHandler multithreadingTaskHandler = SpringContextUtil.getInstance().getBean(MultithreadingTaskHandler.class);
-        multithreadingTaskHandler.executeTask(LogDTO.builder()
-                .originIP(HttpUtil.getIpAddress(exchange.getRequest()))
-                .originURI(exchange.getRequest().getPath().value())
-                .proxyURI(url)
-                .routeName(routeName)
-                .targetService(serviceName)
-                .serviceInstance(serviceInstance)
-                .createdTime(LocalDateTime.now())
-                .traceId(exchange.getAttribute(CommonConstant.TRACE_ID))
-                .build());
     }
 
     /**
