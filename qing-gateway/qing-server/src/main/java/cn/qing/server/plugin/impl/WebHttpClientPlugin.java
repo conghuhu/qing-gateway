@@ -81,7 +81,11 @@ public class WebHttpClientPlugin extends AbstractQingPlugin {
         return response
                 .onErrorMap(QingException.class, th -> new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, QingExceptionEnum.SERVICE_NOT_FIND.getMessage(), th))
                 .onErrorMap(TimeoutException.class, th -> new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, th.getMessage(), th))
-                .flatMap(res -> exchange.getResponse().writeWith(res.bodyToMono(DataBuffer.class)))
+                .flatMap(res -> {
+                    exchange.getResponse().getCookies().setAll(res.cookies().toSingleValueMap());
+                    exchange.getResponse().getHeaders().addAll(res.headers().asHttpHeaders());
+                    return exchange.getResponse().writeWith(res.bodyToMono(DataBuffer.class));
+                })
                 .flatMap((Function<Object, Mono<? extends Void>>) o -> chain.doChain(exchange));
     }
 
