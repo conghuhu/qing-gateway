@@ -24,6 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
@@ -40,10 +41,17 @@ public class ExceptionHandler implements WebExceptionHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         ServerHttpResponse response = exchange.getResponse();
-        response.setStatusCode(HttpStatus.BAD_REQUEST);
-        response.getHeaders().setContentType(MediaType.TEXT_PLAIN);
+        QingResult<Object> qingResult;
+        if (ex instanceof ResponseStatusException) {
+            response.setStatusCode(((ResponseStatusException) ex).getStatus());
+            qingResult = QingResult.error(((ResponseStatusException) ex).getStatus().value(), toStr(ex));
+        } else {
+            response.setStatusCode(HttpStatus.BAD_GATEWAY);
+            response.getHeaders().setContentType(MediaType.TEXT_PLAIN);
+            qingResult = QingResult.error(toStr(ex));
+        }
         ex.printStackTrace();
-        return QingResponseUtil.doResponse(exchange, QingResult.error(toStr(ex)));
+        return QingResponseUtil.doResponse(exchange, qingResult);
     }
 
     private String toStr(Throwable ex) {

@@ -56,7 +56,6 @@
         <dependency>
             <groupId>io.zipkin.reporter2</groupId>
             <artifactId>zipkin-sender-urlconnection</artifactId>
-            <version>2.7.4</version>
         </dependency>
 
         <dependency>
